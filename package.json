@@ -1,0 +1,32 @@
+{
+  "name": "4th_year_project",
+  "version": "1.0.0",
+  "description": "MERN App for my final year project. It will also act as the API for Mobile applications",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "server": "nodemon server.js",
+    "client": "npm run start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sb1994/4th_year_project.git"
+  },
+  "author": "Sean Boyle",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sb1994/4th_year_project/issues"
+  },
+  "homepage": "https://github.com/sb1994/4th_year_project#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "concurrently": "^5.0.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mongoose": "^5.7.3",
+    "nodemon": "^1.19.3"
+  }
+}

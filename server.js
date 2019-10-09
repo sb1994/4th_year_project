@@ -1,16 +1,21 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
-
+const dotenv = require("dotenv");
+const passport = require("passport");
+dotenv.config();
 const app = express();
 
-const db = process.env.MONGOURI || "mongodb://localhost:27017/socialweb";
+const db = process.env.DB_CONNECT;
+// ||
+// "mongodb://localhost:27017/socialweb";
 mongoose
   .connect(db, { useNewUrlParser: true })
   .then(() => console.log("MongoDB Connected"))
   .catch(err => console.log(err));
 const users = require("./api/v1/routes/users");
-
+app.use(passport.initialize());
+require("./config/passport")(passport);
 //parse for the jsnon data that will be passed to the frontend clients
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());

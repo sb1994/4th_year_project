@@ -6,9 +6,7 @@ const passport = require("passport");
 dotenv.config();
 const app = express();
 
-const db = process.env.DB_CONNECT;
-// ||
-// "mongodb://localhost:27017/socialweb";
+const db = process.env.DB_CONNECT || "mongodb://localhost:27017/socialweb";
 mongoose
   .connect(db, { useNewUrlParser: true })
   .then(() => console.log("MongoDB Connected"))

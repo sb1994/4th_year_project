@@ -1,12 +1,23 @@
 import React, { Component } from "react";
-import { Text, View, TextInput, Button, Alert } from "react-native";
+import {
+  Text,
+  View,
+  TextInput,
+  Button,
+  Alert,
+  AsyncStorage
+} from "react-native";
+import * as SecureStore from "expo-secure-store";
 import styles from "../styles";
+import axios from "axios";
 export class LoginScreen extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      username: "",
+      // email: "Sean94@gmail.com",
+      // password: "Seancal123"
+      email: "",
       password: ""
     };
   }
@@ -14,14 +25,53 @@ export class LoginScreen extends Component {
   static navigationOptions = {
     header: null
   };
+  componentDidMount() {
+    SecureStore.getItemAsync("token").then(token => {
+      // console.log(token);
+      if (token) {
+        // console.log(h);
+        this.props.navigation.navigate("Dashboard");
+      }
+    });
+    // SecureStore.deleteItemAsync("token");
+  }
+  registerForm() {
+    this.props.navigation.navigate("Register");
+  }
   checkLogin() {
-    const { username, password } = this.state;
-    if (username === "Admin " && password === "Admin") {
-      // console.warn(username, password);
+    const { email, password } = this.state;
+    ///test ti see iff axois requests were made
+
+    // if (username === "Admin " && password === "Admin") {
+    //   // console.warn(username, password);
+    //   //push to the dashboard using the router
+    //   this.props.navigation.navigate("Dashboard");
+    // } else {
+    //   Alert.alert("Wrong username || password");
+    // }
+
+    if (email !== "" && password !== "") {
+      // console.warn(email, password);
       //push to the dashboard using the router
-      this.props.navigation.navigate("Dashboard");
+      axios
+        .post("api/users/login", { email, password })
+        .then(result => {
+          // console.log(result.data);
+          const { success, token } = result.data;
+          console.log(success);
+
+          if (success) {
+            SecureStore.setItemAsync("token", token);
+            this.props.navigation.navigate("Dashboard");
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+
+      // this.props.navigation.navigate("Dashboard");
     } else {
-      Alert.alert("Wrong username || password");
+      Alert.alert("Enter email || password");
     }
   }
   render() {
@@ -33,8 +83,8 @@ export class LoginScreen extends Component {
         <TextInput
           style={input}
           underlineColorAndroid="transparent"
-          placeholder="username"
-          onChangeText={text => this.setState({ username: text })}
+          placeholder="email"
+          onChangeText={text => this.setState({ email: text })}
         />
         <TextInput
           placeholder="Password"
@@ -44,6 +94,9 @@ export class LoginScreen extends Component {
           onChangeText={text => this.setState({ password: text })}
         />
         <Button title="Login" onPress={() => this.checkLogin()} />
+        <Button title="Register" onPress={() => this.registerForm()} />
+
+        <Button title="Get token" onPress={() => this.getToken()} />
       </View>
     );
   }

@@ -8,6 +8,16 @@ const passport = require("passport");
 const User = require("../models/User");
 
 router.get("/test", (req, res) => res.json({ msg: "Users Works" }));
+
+router.get("/", (req, res) => {
+  User.find({})
+    .select("-password")
+    .then(users => {
+      res.json({ users: users });
+    })
+    .catch(err => {});
+});
+
 router.post("/register", (req, res) => {
   const errors = {};
   console.log(res.body);
@@ -65,7 +75,8 @@ router.post("/login", (req, res) => {
         const payload = {
           id: user.id,
           name: user.name,
-          profile_pic: user.profile_pic
+          profile_pic: user.profile_pic,
+          email: user.email
         };
         console.log(payload);
 
@@ -77,7 +88,7 @@ router.post("/login", (req, res) => {
           (err, token) => {
             res.json({
               success: true,
-              token: `Bearer ${token}`
+              token: `${token}`
             });
           }
         );
@@ -93,11 +104,15 @@ router.get(
   "/current",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
+    console.log(req.user);
+
     res.json({
-      id: req.user.id,
-      name: req.user.name,
-      email: req.user.email,
-      profile_pic: req.user.profile_pic
+      user: {
+        id: req.user.id,
+        name: req.user.name,
+        email: req.user.email,
+        profile_pic: req.user.profile_pic
+      }
     });
   }
 );

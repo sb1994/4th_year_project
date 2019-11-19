@@ -26,5 +26,5 @@
     "babel-preset-expo": "^7.0.0"
   },
   "private": true,
-  "proxy": "http://192.168.0.129:3000"
+  "proxy": "http://192.168.0.129:5000"
 }

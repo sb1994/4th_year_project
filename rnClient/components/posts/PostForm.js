@@ -44,11 +44,11 @@ export class PostForm extends Component {
     // });
     // console.log(this.state);
     axios
-      .post("/api/posts", { text, longitude, latitude })
+      .post("/api/posts/create", { text, longitude, latitude })
       .then(result => {
         if (result) {
           this.setState({
-            text: "dsad"
+            text: ""
           });
         }
       })

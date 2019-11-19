@@ -1,36 +1,36 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { usePosition } from "use-position";
-
-class Login extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      user: {}
-    };
+import { connect } from "react-redux";
+import { loginAuth } from "../../actions/userAuthActions";
+export class Login extends Component {
+  componentDidMount() {
+    if (this.props.auth.isAuthenticated) {
+      this.props.history.push("/dashboard");
+    }
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.auth.isAuthenticated) {
+      this.props.history.push("/dashboard");
+    }
+
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
+    }
+  }
   handleSubmit = e => {
     e.preventDefault();
-    let username = e.target["username"].value;
+    let email = e.target["email"].value;
     let password = e.target["password"].value;
     // console.log(e.target['username'].value);
-    console.log(username, password);
-    this.props.onAuthLogin(username, password);
-    // this.props.history.push('/movies')
+    // console.log(username,password);
+    this.props.loginAuth(email, password);
+    // this.props.history.push("/register");
+    console.log(this.props.auth);
   };
-  componentDidMount() {
-    navigator.geolocation.getCurrentPosition(position => {
-      this.setState({
-        user: position.coords
-      });
-    });
-  }
   render() {
     return (
       <div>
-        <h1>Login</h1>
         <form onSubmit={this.handleSubmit}>
           <div className="form-group">
             <label htmlFor="email">Email address</label>
@@ -38,13 +38,9 @@ class Login extends Component {
               type="text"
               className="form-control"
               id="email"
-              aria-describedby="emailHelp"
-              placeholder="Enter username"
-              name="username"
+              placeholder="Enter email"
+              name="email"
             />
-            <small id="emailHelp" className="form-text text-muted">
-              We'll never share your username with anyone else.
-            </small>
           </div>
           <div className="form-group">
             <label htmlFor="password">Password</label>
@@ -68,4 +64,16 @@ class Login extends Component {
     );
   }
 }
-export default Login;
+
+const mapStateToProps = state => {
+  return {
+    loading: state.loading,
+    error: state.error,
+    auth: state.auth
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  { loginAuth }
+)(Login);

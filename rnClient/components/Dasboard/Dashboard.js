@@ -22,10 +22,10 @@ class Dashboard extends Component {
   componentDidMount() {
     SecureStore.getItemAsync("token").then(token => {
       if (token) {
-        // console.log(token);
+        console.log(token);
         // SecureStore.deleteItemAsync("token");
         axios
-          .get("/api/users/current")
+          .get("api/users/current")
           .then(result => {
             // console.log(result.data);
             this.setState({
@@ -49,7 +49,7 @@ class Dashboard extends Component {
     if (isLoading) {
       return (
         <View style={parent}>
-          <Text style={heading}> Loading ....</Text>
+          <Text style={heading}> Loading .....</Text>
         </View>
       );
     } else {

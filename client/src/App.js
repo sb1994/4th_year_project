@@ -1,39 +1,56 @@
-import React, { Component } from "react";
-import axios from "axios";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import React, { Component, Fragment } from "react";
+import { Provider } from "react-redux";
+// import axios from "axios";
+import setUserToken from "./utils/setUserToken";
+
+import jwt_decode from "jwt-decode";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+import store from "./store";
+import { setLoggedUser, logoutUser } from "./actions/userAuthActions";
 
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
+import NavBar from "./components/Navbar";
+import Dashboard from "./components/dashboard/Dashboard";
+
+if (localStorage.token) {
+  // console.log(localStorage.token);
+  setUserToken(localStorage.token);
+  const decoded = jwt_decode(localStorage.token);
+  // console.log(decoded);
+
+  // Set user and isAuthenticated
+  store.dispatch(setLoggedUser(decoded));
+
+  // Check for expired token
+  // const currentTime = Date.now() / 1000;
+  // if (decoded.exp < currentTime) {
+  //   // Logout user
+  //   store.dispatch(logoutUser());
+  //   // Clear current Profile
+  //   store.dispatch(clearCurrentUser());
+  //   // Redirect to login
+  //   // window.location.href = '/login';
+  // }
+}
+
 class App extends Component {
   render() {
     return (
-      <div>
-        <Router>
-          <div>
-            <nav className="navbar navbar-expand-sm bg-light navbar-light">
-              <ul className="navbar-nav">
-                <li className="nav-item">
-                  <Link to="/" className="nav-link" className="nav-link">
-                    Home
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link to="/login" className="nav-link">
-                    Login
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link to="/register" className="nav-link">
-                    Register
-                  </Link>
-                </li>
-              </ul>
-            </nav>
-            <Route exact path="/login" component={Login}></Route>
-            <Route exact path="/register" component={Register}></Route>
-          </div>
-        </Router>
-      </div>
+      <Provider store={store}>
+        <BrowserRouter>
+          <Fragment>
+            <NavBar />
+            <div className="container">
+              <Switch>
+                <Route path="/register" component={Register} />
+                <Route path="/login" component={Login} />
+                <Route path="/dashboard" component={Dashboard} />
+              </Switch>
+            </div>
+          </Fragment>
+        </BrowserRouter>
+      </Provider>
     );
   }
 }

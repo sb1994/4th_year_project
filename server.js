@@ -3,12 +3,17 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const passport = require("passport");
+// const keys = require("./config/key");
 
+const cors = require("cors");
 dotenv.config();
 
 const app = express();
 
-const db = process.env.DB_CONNECT || "mongodb://localhost:27017/socialweb";
+// const db = process.env.DB_CONNECT || "mongodb://localhost:27017/socialweb";
+// const db = "mongodb://localhost:27017/socialweb";
+const db =
+  "mongodb+srv://admin123:admin123@cluster0-jhik6.mongodb.net/test?retryWrites=true&w=majority";
 mongoose
   .connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log("MongoDB Connected"))

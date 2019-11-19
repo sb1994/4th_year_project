@@ -20,7 +20,7 @@ router.get("/", (req, res) => {
 
 router.post("/register", (req, res) => {
   const errors = {};
-  console.log(res.body);
+  console.log(req.body);
 
   User.findOne({
     email: req.body.email
@@ -57,17 +57,18 @@ router.post("/register", (req, res) => {
 router.post("/login", (req, res) => {
   const { email, password } = req.body;
   console.log(email);
+  console.log(req.body);
 
-  //find user by email
+  // //find user by email
   User.findOne({
     email: email
   }).then(user => {
-    if (!user) {
-      return res.status(404).json({ email: "User Not Found" });
-    }
-    console.log(user.password);
+    // if (!user) {
+    //   return res.status(404).json({ email: "User Not Found" });
+    // }
+    // console.log(user);
 
-    // check the password
+    // //check the password
     bcrypt.compare(password, user.password, (err, isMatch) => {
       if (isMatch) {
         //user matched create the payload taht will
@@ -81,6 +82,8 @@ router.post("/login", (req, res) => {
         console.log(payload);
 
         // Sign Token
+        console.log("keys");
+
         jwt.sign(
           payload,
           keys.secretOrKey,
@@ -90,6 +93,7 @@ router.post("/login", (req, res) => {
               success: true,
               token: `${token}`
             });
+            console.log(token);
           }
         );
         // return res.status(200).json({ msg: "Login succes" });

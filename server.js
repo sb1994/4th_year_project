@@ -15,7 +15,11 @@ const app = express();
 const db =
   "mongodb+srv://admin123:admin123@cluster0-jhik6.mongodb.net/test?retryWrites=true&w=majority";
 mongoose
-  .connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(db, {
+    useNewUrlParser: true,
+
+    useUnifiedTopology: true
+  })
   .then(() => console.log("MongoDB Connected"))
   .catch(err => console.log(err));
 const users = require("./api/v1/routes/users");

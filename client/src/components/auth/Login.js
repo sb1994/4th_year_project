@@ -22,6 +22,10 @@ export class Login extends Component {
     e.preventDefault();
     let email = e.target["email"].value;
     let password = e.target["password"].value;
+    let userData = {
+      email,
+      password
+    };
     // console.log(e.target['username'].value);
     // console.log(username,password);
     this.props.loginAuth(email, password);
@@ -73,7 +77,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  { loginAuth }
-)(Login);
+export default connect(mapStateToProps, { loginAuth })(Login);

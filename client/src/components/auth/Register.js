@@ -19,7 +19,7 @@ class Register extends Component {
       fav_quote: "",
       name: ""
     };
-    this.handleFileChange = this.handleFileChange.bind(this);
+    // this.handleFileChange = this.handleFileChange.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -156,7 +156,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  { registerAuth }
-)(Register);
+export default connect(mapStateToProps, { registerAuth })(Register);

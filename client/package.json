@@ -25,7 +25,7 @@
     "socket.io-client": "^2.3.0",
     "use-position": "0.0.6"
   },
-  "proxy": "http://localhost:5000/api",
+  "proxy": "http://localhost:5000",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

@@ -20,6 +20,7 @@ router.get("/", (req, res) => {
 
 router.post("/register", (req, res) => {
   const errors = {};
+  //error - cannot deconstruct req.body so put whole value
   console.log(req.body);
 
   User.findOne({
@@ -56,10 +57,18 @@ router.post("/register", (req, res) => {
 });
 router.post("/login", (req, res) => {
   const { email, password } = req.body;
-  console.log(email);
-  console.log(req.body);
-
-  // //find user by email
+  // console.log(email);
+  // console.log(req.body);
+  // User.findOne({
+  //   email: req.body.email
+  // })
+  //   .then(user => {
+  //     console.log(user);
+  //   })
+  //   .catch(err => {
+  //     console.log(err);
+  //   });
+  // // //find user by email
   User.findOne({
     email: email
   }).then(user => {

@@ -15,6 +15,11 @@ const styles = {
   }
 };
 class Navbar extends Component {
+  onLogoutClick(e) {
+    e.preventDefault();
+    this.props.logoutUser();
+    // this.props.history.push("/login");
+  }
   render() {
     const { isAuthenticated, user } = this.props.auth;
     const authLinks = (
@@ -23,6 +28,13 @@ class Navbar extends Component {
           <NavLink className="white-text" to="/dashboard">
             <MDBRow className="mb-2 sm-2">
               <MDBCol md="4" sm="2">
+                <a
+                  href=""
+                  onClick={this.onLogoutClick.bind(this)}
+                  className="nav-link"
+                >
+                  Logout
+                </a>
                 <img
                   src={user.profile_pic}
                   className="img-fluid"
@@ -59,4 +71,4 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps)(Navbar);
+export default connect(mapStateToProps, { logoutUser })(Navbar);

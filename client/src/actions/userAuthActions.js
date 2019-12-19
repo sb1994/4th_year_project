@@ -49,8 +49,6 @@ export const setLoggedUser = decoded => {
   };
 };
 export const loginAuth = (email, password) => {
-  // alert that the login has started
-
   return dispatch => {
     dispatch(startAuth());
     axios
@@ -62,7 +60,6 @@ export const loginAuth = (email, password) => {
         const token = result.data.token;
         //sets the expirey date
         const expire = new Date(new Date().getTime() + 10000 * 1000);
-
         //stores the the token and the expireation date in the browser
         //as a cookie
         localStorage.setItem("token", token);
@@ -72,6 +69,28 @@ export const loginAuth = (email, password) => {
         console.log(err);
       });
   };
+
+  // alert that the login has started
+  // return dispatch => {
+  //   dispatch(startAuth());
+  //   axios
+  //     .post("api/users/login", {
+  //       email: email,
+  //       password: password
+  //     })
+  //     .then(result => {
+  //       const token = result.data.token;
+  //       //sets the expirey date
+  //       const expire = new Date(new Date().getTime() + 10000 * 1000);
+  //       //stores the the token and the expireation date in the browser
+  //       //as a cookie
+  //       localStorage.setItem("token", token);
+  //       dispatch(setLoggedUser(token));
+  //     })
+  //     .catch(err => {
+  //       console.log(err);
+  //     });
+  // };
 };
 export const registerAuth = (password, name, email) => {
   //alert that the register has started

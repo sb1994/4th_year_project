@@ -10,7 +10,7 @@ dotenv.config();
 
 const app = express();
 
-// const db = process.env.DB_CONNECT || "mongodb://localhost:27017/socialweb";
+// const db = process.env.DB_URI || "mongodb://localhost:27017/socialweb";
 // const db = "mongodb://localhost:27017/socialweb";
 const db =
   "mongodb+srv://admin123:admin123@cluster0-jhik6.mongodb.net/test?retryWrites=true&w=majority";

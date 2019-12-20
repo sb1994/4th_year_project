@@ -8,17 +8,25 @@ const PostSchema = new Schema({
     ref: "users"
   },
   text: {
-    type: String,
-    required: true
+    type: String
   },
-  longitude: {
-    type: String,
-    required: true
+  postImgURL: {
+    type: String
   },
-  latitude: {
-    type: String,
-    required: true
-  },
+  comments: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Comment"
+    }
+  ],
+  likes: [
+    {
+      user: {
+        type: Schema.Types.ObjectId,
+        ref: "users"
+      }
+    }
+  ],
   created: {
     type: Date,
     default: Date.now

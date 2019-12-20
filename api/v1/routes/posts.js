@@ -22,11 +22,10 @@ router.post(
 
     const newPost = new Post({
       text: req.body.text,
-      longitude: req.body.longitude,
-      latitude: req.body.latitude,
+      postImgURL: req.body.postImgURL,
       user: req.user._id
     });
-    // console.log(newPost);
+    console.log(newPost);
 
     newPost.save().then(post => res.json(post));
   }

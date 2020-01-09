@@ -12,8 +12,8 @@ export class PostForm extends Component {
       text: "",
       latitude: "",
       longitude: "",
-      post_pic: {},
-      postPicURL: ""
+      post_pic: null,
+      postImgURL: ""
     };
     this.handleFileChange = this.handleFileChange.bind(this);
     this.onChange = this.onChange.bind(this);
@@ -117,10 +117,11 @@ export class PostForm extends Component {
   // }
   onSubmit(e) {
     console.log("LOL");
-    if (isEmpty(this.state.post_pic) && this.state.text !== "") {
+    if (this.state.post_pic === null && this.state.text !== "") {
       console.log("Will post text not image");
       const newPost = {
-        text: this.state.text
+        text: this.state.text,
+        postImgUrl: ""
       };
       console.log(newPost);
       this.props.addPost(newPost);
@@ -131,8 +132,10 @@ export class PostForm extends Component {
       const newPost = {
         text: this.state.text,
         post_pic: this.state.post_pic,
-        postImgURL: ""
+        postImgUrl: ""
       };
+      // console.log(newPost.post_pic);
+
       const uploadTask = storage
         .ref(`post_imgs/${newPost.post_pic.name}`)
         .put(newPost.post_pic);
@@ -152,16 +155,21 @@ export class PostForm extends Component {
             .child(newPost.post_pic.name)
             .getDownloadURL()
             .then(url => {
-              let postImgUrl = url;
-              console.log(postImgUrl);
-              newPost.postImgURL = postImgUrl;
-              this.props.addPost(newPost);
+              let postImgURL = url;
+              // console.log(postImgUrl);
+
+              // console.log(postImgUrl);
+              newPost.postImgURL = postImgURL;
               // console.log(newPost);
+              this.props.addPost(newPost);
+              console.log(this.state);
+
               this.setState({
                 text: "",
                 latitude: "",
                 longitude: "",
-                post_pic: {},
+                post_pic: null,
+                postImgUrl: "",
                 postImgURL: ""
               });
             })
@@ -171,6 +179,11 @@ export class PostForm extends Component {
         }
       );
     }
+    // console.log(this.state.post_pic);
+
+    // if (!isEmpty(this.state.post_pic)) {
+
+    // }
   }
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
@@ -178,46 +191,56 @@ export class PostForm extends Component {
 
   render() {
     const { postImgURL } = this.state;
+    let postFormOutput;
 
-    return (
-      <div className="post-form mb-3">
-        <div className="card card-info">
-          <div className="card-header bg-info text-white">
-            Say Something....
-          </div>
-          <div className="card-body">
-            {/* <form onSubmit={this.onSubmit}> */}
-            <div className="form-group">
-              <input
-                type="text"
-                value={this.state.text}
-                placeholder="Speack your mind"
-                onChange={this.onChange}
-                name="text"
-              />
+    if (this.props.auth.isAuthenticated) {
+      // console.log("I can post here");
+      return (
+        <div className="post-form mb-3">
+          <div className="card card-info">
+            <div className="card-header bg-info text-white">
+              Say Something....
             </div>
-            <div className="form-group">
-              <img
-                src={postImgURL}
-                className="img-responsive card-img"
-                alt=""
-              />
-              <input
-                type="file"
-                value={this.state.profile_pic}
-                name="avatar"
-                id="avatar"
-                onChange={this.handleFileChange}
-              />
+            <div className="card-body">
+              {/* <form onSubmit={this.onSubmit}> */}
+              <div className="form-group">
+                <input
+                  type="text"
+                  value={this.state.text}
+                  placeholder="Speack your mind"
+                  onChange={this.onChange}
+                  name="text"
+                />
+              </div>
+              <div className="form-group">
+                <img
+                  src={postImgURL}
+                  className="img-responsive card-img"
+                  alt=""
+                />
+                <input
+                  type="file"
+                  value={this.state.profile_pic}
+                  name="avatar"
+                  id="avatar"
+                  onChange={this.handleFileChange}
+                />
+              </div>
+              <button className="btn btn-dark" onClick={this.onSubmit}>
+                Submit
+              </button>
+              {/* </form> */}
             </div>
-            <button className="btn btn-dark" onClick={this.onSubmit}>
-              Submit
-            </button>
-            {/* </form> */}
           </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      return (
+        <div>
+          <p>Please Login</p>
+        </div>
+      );
+    }
   }
 }
 

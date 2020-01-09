@@ -14,13 +14,15 @@ import {
 // Add Post
 export const addPost = postData => dispatch => {
   // dispatch(clearInputErrors());
-  const { text, latitude, longitude } = postData;
+  console.log(postData);
+
+  const { text, postImgURL } = postData;
   // console.log(postData);
   console.log(postData);
   // const dispatch = dispatch;
 
   axios
-    .post("/api/posts/create", { text, latitude, longitude })
+    .post("/api/posts/create", { text, postImgURL })
     .then(
       res =>
         dispatch({

@@ -22,7 +22,19 @@ export class Post extends Component {
               </div>
             </div>
           </div>
-          <div className="card-body">{this.props.post.text}</div>
+          <div className="card-body">
+            <div className="row">
+              <div className="col-md-12">{this.props.post.text}</div>
+              <div className="col-md-12">
+                <img
+                  className="img-fluid"
+                  src={this.props.post.postImgURL}
+                  alt=""
+                  srcset=""
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     );

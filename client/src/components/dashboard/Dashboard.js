@@ -41,7 +41,7 @@ class Dashboard extends Component {
       <div className="container">
         <h1>Dashboard</h1>
         <div className="row">
-          <div className="col-md-3 card">
+          <div className="col-md-3 card" style={style.profile}>
             <div className="card-body">
               <h2 className="card-title">{user.name}</h2>
               <img
@@ -65,6 +65,11 @@ class Dashboard extends Component {
     );
   }
 }
+const style = {
+  profile: {
+    height: 500
+  }
+};
 const mapStateToProps = state => ({
   auth: state.auth
   // post: state.posts

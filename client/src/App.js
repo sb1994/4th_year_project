@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import setUserToken from "./utils/setUserToken";
 
 import jwt_decode from "jwt-decode";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route, withRouter } from "react-router-dom";
 import store from "./store";
 import { setLoggedUser, logoutUser } from "./actions/userAuthActions";
 
@@ -12,7 +12,7 @@ import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 import NavBar from "./components/Navbar";
 import Dashboard from "./components/dashboard/Dashboard";
-
+import { SearchUsers } from "./components/users/SearchUsers";
 if (localStorage.token) {
   // console.log(localStorage.token);
   setUserToken(localStorage.token);
@@ -46,6 +46,7 @@ class App extends Component {
                 <Route path="/register" component={Register} />
                 <Route path="/login" component={Login} />
                 <Route path="/dashboard" component={Dashboard} />
+                <Route path="/search" component={SearchUsers} />
               </Switch>
             </div>
           </Fragment>

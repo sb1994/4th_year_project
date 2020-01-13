@@ -1,7 +1,30 @@
 import React, { Component } from "react";
 import Moment from "react-moment";
+import CommentList from "./CommentList";
 export class Post extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showComments: false
+    };
+    this.showComments = this.showComments.bind(this);
+  }
+  componentDidMount() {
+    console.log(this.props);
+  }
+  showComments() {
+    if (this.state.showComments) {
+      this.setState({
+        showComments: false
+      });
+    } else {
+      this.setState({
+        showComments: true
+      });
+    }
+  }
   render() {
+    const { showComments } = this.state;
     return (
       <div className="post-form mb-3">
         <div className="card card-info">
@@ -26,12 +49,24 @@ export class Post extends Component {
             <div className="row">
               <div className="col-md-12">{this.props.post.text}</div>
               <div className="col-md-12">
-                <img
-                  className="img-fluid"
-                  src={this.props.post.postImgURL}
-                  alt=""
-                  srcset=""
-                />
+                {this.props.post.postImgURL === undefined ? (
+                  ""
+                ) : (
+                  <img
+                    className="img-fluid"
+                    src={this.props.post.postImgURL}
+                    alt="Post Image"
+                  />
+                )}
+              </div>
+              <hr />
+              <div className="col-md-12">
+                <button className="btn btn-primary" onClick={this.showComments}>
+                  {showComments ? "Hide Comments" : "Show Comments"}
+                </button>
+              </div>
+              <div className="col-md-12">
+                {showComments ? <CommentList /> : ""}
               </div>
             </div>
           </div>

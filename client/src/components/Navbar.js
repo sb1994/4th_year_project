@@ -7,6 +7,7 @@ import {
   MDBCol,
   MDBRow
 } from "mdbreact";
+import { withRouter } from "react-router-dom";
 import { setLoggedUser, logoutUser } from "../actions/userAuthActions";
 const styles = {
   img: {
@@ -18,7 +19,8 @@ class Navbar extends Component {
   onLogoutClick(e) {
     e.preventDefault();
     this.props.logoutUser();
-    // this.props.history.push("/login");
+    this.props.history.push("/login");
+    // console.log(this.props);
   }
   render() {
     const { isAuthenticated, user } = this.props.auth;
@@ -28,18 +30,19 @@ class Navbar extends Component {
           <NavLink className="white-text" to="/dashboard">
             <MDBRow className="mb-2 sm-2">
               <MDBCol md="4" sm="2">
-                <a
-                  href=""
+                <NavLink
+                  to=""
                   onClick={this.onLogoutClick.bind(this)}
-                  className="nav-link"
+                  className="white-text"
                 >
                   Logout
-                </a>
+                </NavLink>
                 <img
                   src={user.profile_pic}
                   className="img-fluid"
                   style={styles.img}
                 />
+                <NavItem></NavItem>
               </MDBCol>
             </MDBRow>
           </NavLink>
@@ -71,4 +74,9 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps, { logoutUser })(Navbar);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    { logoutUser }
+  )(Navbar)
+);

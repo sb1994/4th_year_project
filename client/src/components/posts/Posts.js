@@ -20,6 +20,8 @@ class Posts extends Component {
     } else {
       // console.log(this.props.posts);
       postContent = <Newsfeed posts={posts} />;
+
+      console.log(this.props);
     }
 
     return (
@@ -38,7 +40,8 @@ class Posts extends Component {
 }
 
 const mapStateToProps = state => ({
-  posts: state.posts
+  posts: state.posts,
+  auth: state.auth
 });
 
 export default connect(

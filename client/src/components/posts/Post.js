@@ -9,9 +9,7 @@ export class Post extends Component {
     };
     this.showComments = this.showComments.bind(this);
   }
-  componentDidMount() {
-    console.log(this.props);
-  }
+  componentDidMount() {}
   showComments() {
     if (this.state.showComments) {
       this.setState({

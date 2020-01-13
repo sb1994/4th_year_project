@@ -15,3 +15,8 @@ export const CLEAR_INPUT_ERRORS = "CLEAR_INPUT_ERRORS";
 export const CLEAR_ERRORS = "CLEAR_ERRORS";
 export const GET_ERRORS = "GET_ERRORS";
 export const POST_LOADING = "POST_LOADING";
+
+//Search action Types
+export const GET_USERS = "GET_USERS";
+export const FILTER_USERS = "FILTER_USERS";
+export const LOADING_USERS = "LOADING_USERS";

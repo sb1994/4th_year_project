@@ -12,7 +12,7 @@ import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 import NavBar from "./components/Navbar";
 import Dashboard from "./components/dashboard/Dashboard";
-import { SearchUsers } from "./components/users/SearchUsers";
+import SearchUsers from "./components/users/SearchUsers";
 if (localStorage.token) {
   // console.log(localStorage.token);
   setUserToken(localStorage.token);

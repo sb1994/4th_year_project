@@ -16,6 +16,11 @@ export const CLEAR_ERRORS = "CLEAR_ERRORS";
 export const GET_ERRORS = "GET_ERRORS";
 export const POST_LOADING = "POST_LOADING";
 
+//comment acction types
+export const GET_COMMENTS = "GET_COMMENTS";
+export const GET_COMMENT = "GET_COMMENT";
+export const ADD_COMMENT = "ADD_COMMENT";
+
 //Search action Types
 export const GET_USERS = "GET_USERS";
 export const FILTER_USERS = "FILTER_USERS";

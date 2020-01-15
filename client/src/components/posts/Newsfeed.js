@@ -22,7 +22,7 @@ export class Newsfeed extends Component {
 
     return (
       <div>
-        {/* <h2>NewsFeed</h2> */}
+        <h2>NewsFeed</h2>
         {newsFeedContent}
       </div>
     );
@@ -34,7 +34,4 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(
-  mapStateToProps
-  // { getPosts }
-)(Newsfeed);
+export default connect(mapStateToProps, { getPosts })(Newsfeed);

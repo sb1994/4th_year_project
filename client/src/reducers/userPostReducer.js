@@ -3,7 +3,8 @@ import {
   GET_POSTS,
   GET_POST,
   DELETE_POST,
-  POST_LOADING
+  POST_LOADING,
+  ADD_COMMENT
 } from "../actions/action_types";
 
 const initialState = {
@@ -41,6 +42,14 @@ const post = (state = initialState, action) => {
       return {
         ...state,
         posts: state.posts.filter(post => post._id !== action.payload)
+      };
+    case ADD_COMMENT:
+      // console.log(action.payload.post.comments);
+
+      return {
+        ...state,
+        posts: action.payload,
+        loading: false
       };
     default:
       return state;

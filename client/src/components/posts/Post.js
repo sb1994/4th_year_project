@@ -71,7 +71,7 @@ export class Post extends Component {
                 {showComments ? (
                   <div className="row">
                     <CommentForm post_id={this.props.post._id} />
-                    <CommentList />
+                    <CommentList comments={this.props.post.comments} />
                   </div>
                 ) : (
                   ""

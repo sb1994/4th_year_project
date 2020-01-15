@@ -10,8 +10,6 @@ export class PostForm extends Component {
 
     this.state = {
       text: "",
-      latitude: "",
-      longitude: "",
       post_pic: null,
       postImgURL: ""
     };
@@ -28,93 +26,6 @@ export class PostForm extends Component {
       });
     }
   }
-  // onSubmit(e) {
-  //   // e.preventDefault();
-  //   const newPost = {
-  //     text: this.state.text
-  //   };
-  //   if (navigator.geolocation) {
-  //     navigator.geolocation.getCurrentPosition(position => {
-  //       //check if both inputs have values
-  //       if (isEmpty(this.state.post_pic) && this.state.text !== "") {
-  //         console.log("Will post text not image");
-  //         const newPost = {
-  //           text: this.state.text,
-  //           latitude: position.coords.latitude,
-  //           longitude: position.coords.longitude
-  //         };
-  //         console.log(newPost);
-  //         this.props.addPost(newPost);
-  //         this.setState({
-  //           text: "",
-  //           latitude: "",
-  //           longitude: ""
-  //         });
-  //       } else if (
-  //         isEmpty(this.state.post_pic) === false &&
-  //         this.state.text === ""
-  //       ) {
-  //         console.log("Will post new image not text");
-  //       } else {
-  //         const newPost = {
-  //           text: this.state.text,
-  //           latitude: position.coords.latitude,
-  //           longitude: position.coords.longitude,
-  //           post_pic: this.state.post_pic,
-  //           postImgURL: ""
-  //         };
-  //         const uploadTask = storage
-  //           .ref(`post_imgs/${newPost.post_pic.name}`)
-  //           .put(newPost.post_pic);
-  //         uploadTask.on(
-  //           "state_changed",
-  //           snapshot => {
-  //             console.log(snapshot);
-  //           },
-  //           error => {
-  //             console.log(error);
-  //           },
-  //           () => {
-  //             console.log("IMAGE UPLOADED");
-  //             //what happens whent the postIm has finished uploading
-  //             storage
-  //               .ref("post_imgs")
-  //               .child(newPost.post_pic.name)
-  //               .getDownloadURL()
-  //               .then(url => {
-  //                 let postImgUrl = url;
-  //                 console.log(postImgUrl);
-  //                 newPost.postImgURL = postImgUrl;
-  //                 this.props.addPost(newPost);
-  //                 // console.log(newPost);
-  //                 this.setState({
-  //                   text: "",
-  //                   latitude: "",
-  //                   longitude: "",
-  //                   post_pic: {},
-  //                   postImgURL: ""
-  //                 });
-  //               })
-  //               .catch(err => {
-  //                 console.log(err);
-  //               });
-  //           }
-  //         );
-  //       }
-  //     }
-  //   this.props.addPost(newPost);
-  //   this.setState({
-  //     text: "",
-  //     latitude: "",
-  //     longitude: ""
-  //   });
-
-  //   // const { user } = this.props.auth;
-
-  //   //  this.props.addPost(newPost);
-  //   //  this.setState({ text: "" });
-  // }
-  // }
   onSubmit(e) {
     console.log("LOL");
     if (this.state.post_pic === null && this.state.text !== "") {
@@ -166,8 +77,6 @@ export class PostForm extends Component {
 
               this.setState({
                 text: "",
-                latitude: "",
-                longitude: "",
                 post_pic: null,
                 postImgUrl: "",
                 postImgURL: ""

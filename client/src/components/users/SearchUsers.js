@@ -8,7 +8,6 @@ class SearchUsers extends Component {
   componentDidMount() {
     this.props.getUsers();
   }
-
   render() {
     let { users } = this.props.search;
     let renderUsers;

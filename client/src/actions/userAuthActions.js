@@ -114,7 +114,7 @@ export const registerAuth = (password, name, email) => {
 };
 export const logoutUser = () => dispatch => {
   // Remove token from localStorage
-  localStorage.removeItem("jwtToken");
+  localStorage.removeItem("token");
   // Remove auth header for future requests
   setUserToken(false);
   // Set current user to {} which will set isAuthenticated to false

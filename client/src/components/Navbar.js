@@ -28,23 +28,21 @@ class Navbar extends Component {
       <Fragment>
         <NavItem>
           <NavLink className="white-text" to="/dashboard">
-            <MDBRow className="mb-2 sm-2">
-              <MDBCol md="4" sm="2">
-                <NavLink
-                  to=""
-                  onClick={this.onLogoutClick.bind(this)}
-                  className="white-text"
-                >
-                  Logout
-                </NavLink>
-                <img
-                  src={user.profile_pic}
-                  className="img-fluid"
-                  style={styles.img}
-                />
-                <NavItem></NavItem>
-              </MDBCol>
-            </MDBRow>
+            <NavLink to="/search" className="white-text">
+              Search
+            </NavLink>
+            <NavLink
+              to=""
+              onClick={this.onLogoutClick.bind(this)}
+              className="white-text"
+            >
+              Logout
+            </NavLink>
+            <img
+              src={user.profile_pic}
+              className="img-fluid"
+              style={styles.img}
+            />
           </NavLink>
         </NavItem>
       </Fragment>
@@ -74,9 +72,4 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default withRouter(
-  connect(
-    mapStateToProps,
-    { logoutUser }
-  )(Navbar)
-);
+export default withRouter(connect(mapStateToProps, { logoutUser })(Navbar));

@@ -21,7 +21,7 @@ class Posts extends Component {
       // console.log(this.props.posts);
       postContent = <Newsfeed posts={posts} />;
 
-      console.log(this.props);
+      // console.log(this.props);
     }
 
     return (

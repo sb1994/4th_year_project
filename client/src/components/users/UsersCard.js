@@ -23,13 +23,13 @@ export class UsersCard extends Component {
   }
 
   handleFriendRequest() {
-    console.log(`Hello from ${this.props.user.name}`);
+    console.log(`Hello from ${this.props.user._id}`);
   }
   render() {
     let { user } = this.props;
     return (
       <MDBCol size="2">
-        <MDBCard style={{ width: "22rem" }}>
+        <MDBCard>
           <MDBCardImage
             style={{ width: "80px" }}
             className="img-fluid"
@@ -55,4 +55,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {};
 
-export default connect(mapStateToProps, mapDispatchToProps)(UsersCard);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(UsersCard);

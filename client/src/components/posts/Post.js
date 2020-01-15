@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Moment from "react-moment";
 import CommentList from "./CommentList";
+import CommentForm from "./CommentForm";
 export class Post extends Component {
   constructor(props) {
     super(props);
@@ -9,7 +10,9 @@ export class Post extends Component {
     };
     this.showComments = this.showComments.bind(this);
   }
-  componentDidMount() {}
+  componentDidMount() {
+    console.log(this.props.post);
+  }
   showComments() {
     if (this.state.showComments) {
       this.setState({
@@ -64,7 +67,15 @@ export class Post extends Component {
                 </button>
               </div>
               <div className="col-md-12">
-                {showComments ? <CommentList /> : ""}
+                <hr />
+                {showComments ? (
+                  <div className="row">
+                    <CommentForm post_id={this.props.post._id} />
+                    <CommentList />
+                  </div>
+                ) : (
+                  ""
+                )}
               </div>
             </div>
           </div>

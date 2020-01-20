@@ -18,7 +18,6 @@ export class UsersCard extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
     this.handleFriendRequest = this.handleFriendRequest.bind(this);
   }
 
@@ -60,4 +59,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {};
 
-export default connect(mapStateToProps, mapDispatchToProps)(UsersCard);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(UsersCard);

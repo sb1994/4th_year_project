@@ -9,8 +9,12 @@ class SearchUsers extends Component {
     super(props);
 
     this.state = {
-      user: [],
-      username: ""
+      users: [],
+      term: "",
+      totalResults: 0,
+      totalPages: 0,
+      totalPerPage: 0,
+      currentPageNo: 1
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -20,34 +24,43 @@ class SearchUsers extends Component {
     this.props.getUsers();
   }
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps.search.users);
+    // console.log(nextProps.search.users);
     this.setState({
-      users: nextProps.search.users
+      users: nextProps.search.users,
+      totalUsers: nextProps.search.users.length
     });
   }
+
+  nextPage(pageNumber) {}
   handleChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
   render() {
-    let { users } = this.props.search;
-    let { search } = this.state;
+    let { term, users } = this.state;
+    //returns the user if the index of the search state is not  === -1
+    let fileredUsers = this.props.search.users.filter(user => {
+      console.log(user.name);
+
+      return user.name.toLowerCase().includes(term);
+    });
+    // let   = users
+    // console.log(this.state);
 
     let renderUsers;
-    // console.log(users.length);
-    if (users.length > 0) {
-      renderUsers = users.map((user, index) => {
-        return <UserCard key={index} user={user} />;
-      });
-    }
+    // // console.log(users.length);
+
+    renderUsers = fileredUsers.map((user, index) => (
+      <UserCard key={index} user={user} />
+    ));
 
     return (
       <MDBContainer>
         <h2>Search</h2>
-        <p>{search}</p>
+        <p>{term}</p>
         <input
           type="text"
-          name="username"
-          value={this.state.username}
+          name="term"
+          value={this.state.term}
           onChange={this.handleChange}
         />
         <MDBRow>{renderUsers}</MDBRow>
@@ -61,7 +74,4 @@ const mapStateToProps = state => ({
   search: state.search
 });
 
-export default connect(
-  mapStateToProps,
-  { getUsers }
-)(SearchUsers);
+export default connect(mapStateToProps, { getUsers })(SearchUsers);

@@ -27,8 +27,8 @@ export class UsersCard extends Component {
   render() {
     let { user, auth } = this.props;
     return (
-      <MDBCol size="2">
-        <MDBCard style={{ width: "22rem" }}>
+      <MDBCol size="3">
+        <MDBCard>
           <MDBCardImage
             style={{ width: "80px" }}
             className="img-fluid"
@@ -59,7 +59,4 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {};
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(UsersCard);
+export default connect(mapStateToProps, mapDispatchToProps)(UsersCard);

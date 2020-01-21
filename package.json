@@ -7,6 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
     "server": "nodemon server.js",
+    "users": "nodemon users.js",
     "client": "npm run start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
@@ -22,6 +23,8 @@
   },
   "homepage": "https://github.com/sb1994/4th_year_project#readme",
   "dependencies": {
+    "axios": "^0.19.1",
+    "axois": "0.0.1-security",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "concurrently": "^5.0.0",

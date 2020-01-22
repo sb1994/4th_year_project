@@ -63,7 +63,9 @@ export const loginAuth = (email, password) => {
         //stores the the token and the expireation date in the browser
         //as a cookie
         localStorage.setItem("token", token);
-        dispatch(setLoggedUser(token));
+        setUserToken(token);
+        const decoded = jwt_decode(token);
+        dispatch(setLoggedUser(decoded));
       })
       .catch(err => {
         console.log(err);

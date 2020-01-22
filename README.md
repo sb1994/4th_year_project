@@ -6,3 +6,7 @@
 - Started by adding the form and adding it to the Dashbord compoent.
 - Took some time but found out how to get the geolocation from the browser using the geoloacation API that comes with the browser.
 - Fixed bug where I forgot to add the bearer token to the axios authorization headers
+
+## 22/01/2020
+
+- Client - Fixed error on Dashboard initial render where the profile wouldn load becasue user data was not bening set to set on login function

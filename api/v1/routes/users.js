@@ -57,17 +57,7 @@ router.post("/register", (req, res) => {
 });
 router.post("/login", (req, res) => {
   const { email, password } = req.body;
-  // console.log(email);
-  // console.log(req.body);
-  // User.findOne({
-  //   email: req.body.email
-  // })
-  //   .then(user => {
-  //     console.log(user);
-  //   })
-  //   .catch(err => {
-  //     console.log(err);
-  //   });
+
   // // //find user by email
   User.findOne({
     email: email
@@ -115,6 +105,22 @@ router.post("/login", (req, res) => {
 
 router.get(
   "/current",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    console.log(req.user);
+
+    res.json({
+      user: {
+        id: req.user.id,
+        name: req.user.name,
+        email: req.user.email,
+        profile_pic: req.user.profile_pic
+      }
+    });
+  }
+);
+router.post(
+  "/friends/add/:user_id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     console.log(req.user);

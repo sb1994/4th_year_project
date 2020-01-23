@@ -20,18 +20,20 @@ class Dashboard extends Component {
       // console.log(this.props.getPosts());
     }
   }
-  // componentDidMount() {
-  //   if (navigator.geolocation) {
-  //     navigator.geolocation.getCurrentPosition(function(position) {
-  //       console.log(position.coords);
-  //     });
-  //   } else {
-  //     console.log("were fucked");
-  //   }
-  // }
+  componentWillReceiveProps(nextProps) {
+    if (!nextProps.auth.isAuthenticated) {
+      this.props.history.push("/login");
+    }
+
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
+    }
+  }
   render() {
-    console.log(this.props);
+    // console.log(this.props);
     const { user } = this.props.auth;
+    const { profile } = this.props;
+    console.log(user);
 
     const center = {
       lat: 51.5,
@@ -56,7 +58,7 @@ class Dashboard extends Component {
               {/* <h2>NewsFeed</h2> */}
               <div className="col-md-12">
                 {/* <PostForm /> */}
-                <Posts />
+                {/* <Posts /> */}
               </div>
             </div>
           </div>
@@ -71,7 +73,8 @@ const style = {
   }
 };
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  profile: state.auth
   // post: state.posts
 });
 

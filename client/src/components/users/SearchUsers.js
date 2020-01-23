@@ -39,8 +39,6 @@ class SearchUsers extends Component {
     let { term, users } = this.state;
     //returns the user if the index of the search state is not  === -1
     let fileredUsers = this.props.search.users.filter(user => {
-      console.log(user.name);
-
       return user.name.toLowerCase().includes(term);
     });
     // let   = users

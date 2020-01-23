@@ -18,6 +18,17 @@ const UserSchema = new Schema({
   profile_pic: {
     type: String
   },
+  friends: [
+    {
+      user: {
+        type: Schema.Types.ObjectId,
+        ref: "users"
+      },
+      status: {
+        type: String
+      }
+    }
+  ],
   joined: {
     type: Date,
     default: Date.now

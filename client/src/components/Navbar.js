@@ -19,7 +19,7 @@ class Navbar extends Component {
   onLogoutClick(e) {
     e.preventDefault();
     this.props.logoutUser();
-    this.props.history.push("/login");
+    // this.props.history.push("/login");
     // console.log(this.props);
   }
   render() {
@@ -28,21 +28,25 @@ class Navbar extends Component {
       <Fragment>
         <NavItem>
           <NavLink className="white-text" to="/dashboard">
-            <NavLink to="/search" className="white-text">
-              Search
-            </NavLink>
-            <NavLink
-              to=""
-              onClick={this.onLogoutClick.bind(this)}
-              className="white-text"
-            >
-              Logout
-            </NavLink>
             <img
               src={user.profile_pic}
               className="img-fluid"
               style={styles.img}
             />
+          </NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink to="/search" className="white-text">
+            Search
+          </NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink
+            to=""
+            onClick={this.onLogoutClick.bind(this)}
+            className="white-text"
+          >
+            Logout
           </NavLink>
         </NavItem>
       </Fragment>

@@ -26,6 +26,9 @@ export class UsersCard extends Component {
   }
   render() {
     let { user, auth } = this.props;
+    // console.log(auth.);
+    console.log(user);
+
     return (
       <MDBCol size="3">
         <MDBCard>
@@ -35,11 +38,9 @@ export class UsersCard extends Component {
             src={user.profile_pic}
           />
           <MDBCardBody>
-            <MDBCardTitle>
-              <h4>{user.name}</h4>
-            </MDBCardTitle>
+            <MDBCardTitle>{user.name}</MDBCardTitle>
             {// isA
-            auth.isAuthenticated ? (
+            auth.isAuthenticated && user._id !== auth.user.id ? (
               <Button onClick={this.handleFriendRequest} color="blue">
                 Add
               </Button>

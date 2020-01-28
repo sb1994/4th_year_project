@@ -25,7 +25,8 @@ const UserSchema = new Schema({
         ref: "users"
       },
       status: {
-        type: String
+        type: String,
+        default: "pending"
       }
     }
   ],

@@ -123,16 +123,88 @@ router.post(
   "/friends/add/:user_id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    console.log(req.user);
+    // console.log(req.params.user_id);
+    //id of the person sending the friend request
+    let { _id } = req.user;
+    console.log(`Requester Id : ${_id}`);
 
-    res.json({
-      user: {
-        id: req.user.id,
-        name: req.user.name,
-        email: req.user.email,
-        profile_pic: req.user.profile_pic
+    let friendId = req.params.user_id;
+
+    console.log(`Friends Id: ${friendId}`);
+
+    // User.findOneAndUpdate(
+    //   {
+    //     _id: friendId,
+    //     "friends.user": { $ne: _id }
+    //   },
+    //   { returnOriginal: false },
+    //   { $push: { friends: { user: _id } } },
+    //   (err, user) => {
+    //     if (err) {
+    //       console.log("Error:", err);
+    //     } else {
+    //       console.log(user);
+
+    //       res.json(user);
+    //     }
+    //   }
+    // );
+
+    User.findOneAndUpdate(
+      {
+        _id: friendId,
+        "friends.user": { $ne: _id }
+      },
+      { $addToSet: { friends: { user: _id } } },
+
+      err => {
+        if (err) {
+          console.log("Error:", err);
+        } else {
+          User.findById(friendId)
+            .select("-password")
+            .populate("friends.user")
+            .then(result => {
+              res.send({ user: result });
+            })
+            .catch(err => {
+              console.log(err);
+            });
+        }
+        // process.exit(0);
       }
-    });
+    );
+    // User.find({ _id: req.params.user_id })
+    //   .then(result => {
+    //     console.log(result[0].friends);
+    //     res.json(result[0].friends);
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //   });
+    // console.log(req.user);
+    //   User.findOne(
+    //     {
+    //       _id: req.params.user_id
+    //     },
+    //     function(err, user) {
+    //       if (!user) {
+    //         return res.status(400).send({ message: "User not found" });
+    //       } else {
+    //         console.log(user);
+    //         if (user.friends.indexOf({ user: _id }) === -1) {
+    //           // friendId is not already in user.friends; add it
+    //           user.friends.push(_id);
+
+    //           user.save();
+    //           console.log("Its doesnt exist");
+    //         } else {
+    //           // friendId already exists
+    //           console.log("Its does exist");
+    //         }
+    //       }
+    //     }
+    //   );
   }
 );
 module.exports = router;

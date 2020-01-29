@@ -20,12 +20,13 @@ export const registerUser = userData => dispatch => {
 
 export const addFriend = user_id => dispatch => {
   // console.log(user_id);
-  dispatch({
-    type: types.ADD_FRIEND
-  });
   axios
     .post(`/api/users/friends/add/${user_id}`, user_id)
     .then(res => {
+      dispatch({
+        type: types.ADD_FRIEND,
+        payload: res.data
+      });
       console.log(res.data);
     })
 

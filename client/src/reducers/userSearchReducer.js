@@ -27,8 +27,10 @@ const search = (state = initialState, action) => {
     case ADD_FRIEND:
       return {
         ...state,
-        loading: false
+        loading: false,
+        users: action.payload.users
       };
+
     default:
       return state;
   }

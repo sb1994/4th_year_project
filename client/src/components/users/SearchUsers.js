@@ -10,11 +10,7 @@ class SearchUsers extends Component {
 
     this.state = {
       users: [],
-      term: "",
-      totalResults: 0,
-      totalPages: 0,
-      totalPerPage: 0,
-      currentPageNo: 1
+      term: ""
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -72,4 +68,7 @@ const mapStateToProps = state => ({
   search: state.search
 });
 
-export default connect(mapStateToProps, { getUsers })(SearchUsers);
+export default connect(
+  mapStateToProps,
+  { getUsers }
+)(SearchUsers);

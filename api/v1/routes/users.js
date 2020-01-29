@@ -132,40 +132,39 @@ router.post(
 
     console.log(`Friends Id: ${friendId}`);
 
-    // User.findOneAndUpdate(
-    //   {
-    //     _id: friendId,
-    //     "friends.user": { $ne: _id }
-    //   },
-    //   { returnOriginal: false },
-    //   { $push: { friends: { user: _id } } },
-    //   (err, user) => {
-    //     if (err) {
-    //       console.log("Error:", err);
-    //     } else {
-    //       console.log(user);
-
-    //       res.json(user);
-    //     }
-    //   }
-    // );
-
     User.findOneAndUpdate(
       {
         _id: friendId,
-        "friends.user": { $ne: _id }
+        //testing how to add and remove users from the request array
+        "pendingFriendsRequests.user": { $ne: _id }
+        // "pendingFriendsRequests.user": _id
       },
-      { $addToSet: { friends: { user: _id } } },
+      // { $addToSet: { pendingFriendsRequests: { user: _id } } },
+      {
+        $addToSet: {
+          pendingFriendsRequests: { user: _id, status: "requested" }
+        }
+      },
+      // { $pull: { pendingFriendsRequests: { user: _id } } },
 
       err => {
         if (err) {
           console.log("Error:", err);
         } else {
-          User.findById(friendId)
+          // User.findById(friendId)
+          //   .select("-password")
+          //   .populate("pendingFriendsRequests.user")
+          //   .then(result => {
+          //     res.send({ user: result });
+          //   })
+          //   .catch(err => {
+          //     console.log(err);
+          //   });
+          User.find({})
             .select("-password")
-            .populate("friends.user")
+            .populate("pendingFriendsRequests.user")
             .then(result => {
-              res.send({ user: result });
+              res.send({ users: result });
             })
             .catch(err => {
               console.log(err);
@@ -174,37 +173,6 @@ router.post(
         // process.exit(0);
       }
     );
-    // User.find({ _id: req.params.user_id })
-    //   .then(result => {
-    //     console.log(result[0].friends);
-    //     res.json(result[0].friends);
-    //   })
-    //   .catch(err => {
-    //     console.log(err);
-    //   });
-    // console.log(req.user);
-    //   User.findOne(
-    //     {
-    //       _id: req.params.user_id
-    //     },
-    //     function(err, user) {
-    //       if (!user) {
-    //         return res.status(400).send({ message: "User not found" });
-    //       } else {
-    //         console.log(user);
-    //         if (user.friends.indexOf({ user: _id }) === -1) {
-    //           // friendId is not already in user.friends; add it
-    //           user.friends.push(_id);
-
-    //           user.save();
-    //           console.log("Its doesnt exist");
-    //         } else {
-    //           // friendId already exists
-    //           console.log("Its does exist");
-    //         }
-    //       }
-    //     }
-    //   );
   }
 );
 module.exports = router;

@@ -1,4 +1,6 @@
 const express = require("express");
+const http = require("http");
+const socketio = require("socket.io");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
@@ -9,6 +11,9 @@ const cors = require("cors");
 dotenv.config();
 
 const app = express();
+//setup the soketserver
+
+const server = http.createServer(app);
 
 // const db = process.env.DB_URI || "mongodb://localhost:27017/socialweb";
 // const db = "mongodb://localhost:27017/socialweb";
@@ -49,4 +54,11 @@ if (process.env.NODE_ENV === "production") {
 }
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+//socketio server
+const io = socketio(server);
+
+io.on("connection", socket => {
+  socket.emit("messageFromServer", { data: "Welcome to the SocketIo Server" });
+});

@@ -119,7 +119,7 @@ class Register extends Component {
           <div className="form-group">
             <label htmlFor="exampleInputPassword1">Password</label>
             <input
-              type="password"
+              type="text"
               className="form-control"
               id="exampleInputPassword1"
               placeholder="Password"
@@ -156,4 +156,7 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, { registerAuth })(Register);
+export default connect(
+  mapStateToProps,
+  { registerAuth }
+)(Register);

@@ -41,6 +41,16 @@ class Navbar extends Component {
           </NavLink>
         </NavItem>
         <NavItem>
+          <NavLink to="/chat" className="white-text">
+            Chat
+          </NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink to="/friends" className="white-text">
+            Friends
+          </NavLink>
+        </NavItem>
+        <NavItem>
           <NavLink
             to=""
             onClick={this.onLogoutClick.bind(this)}
@@ -76,4 +86,9 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default withRouter(connect(mapStateToProps, { logoutUser })(Navbar));
+export default withRouter(
+  connect(
+    mapStateToProps,
+    { logoutUser }
+  )(Navbar)
+);

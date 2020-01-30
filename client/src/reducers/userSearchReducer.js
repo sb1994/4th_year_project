@@ -1,4 +1,10 @@
-import { FILTER_USERS, GET_USERS } from "../actions/action_types";
+import {
+  FILTER_USERS,
+  GET_USERS,
+  ADD_FRIEND,
+  SUCCESS_ADD_FRIEND,
+  FAIL_ADD_FRIEND
+} from "../actions/action_types";
 
 const initialState = {
   users: [],
@@ -18,6 +24,13 @@ const search = (state = initialState, action) => {
         users: action.payload.users,
         loading: false
       };
+    case ADD_FRIEND:
+      return {
+        ...state,
+        loading: false,
+        users: action.payload.users
+      };
+
     default:
       return state;
   }

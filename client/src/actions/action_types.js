@@ -13,6 +13,11 @@ export const PROFILE_NOT_FOUND = "PROFILE_NOT_FOUND";
 export const CLEAR_CURRENT_PROFILE = "CLEAR_CURRENT_PROFILE";
 export const GET_PROFILES = "GET_PROFILES";
 
+//Friend Actions
+export const ADD_FRIEND = "ADD_FRIEND";
+export const FAIL_ADD_FRIEND = "FAIL_ADD_FRIEND";
+export const SUCCESS_ADD_FRIEND = "SUCCESS_ADD_FRIEND";
+
 //post action types
 export const GET_POSTS = "GET_POSTS";
 export const GET_POST = "GET_POST";

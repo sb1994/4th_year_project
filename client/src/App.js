@@ -11,7 +11,9 @@ import { setLoggedUser, logoutUser } from "./actions/userAuthActions";
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 import NavBar from "./components/Navbar";
+import Chat from "./components/chat/Chat";
 import Dashboard from "./components/dashboard/Dashboard";
+import Friends from "./components/friends/Friends";
 import SearchUsers from "./components/users/SearchUsers";
 if (localStorage.token) {
   // console.log(localStorage.token);
@@ -41,14 +43,14 @@ class App extends Component {
         <BrowserRouter>
           <Fragment>
             <NavBar />
-            <div className="container">
-              <Switch>
-                <Route path="/register" component={Register} />
-                <Route path="/login" component={Login} />
-                <Route path="/dashboard" component={Dashboard} />
-                <Route path="/search" component={SearchUsers} />
-              </Switch>
-            </div>
+            <Switch>
+              <Route path="/register" component={Register} />
+              <Route path="/login" component={Login} />
+              <Route path="/dashboard" component={Dashboard} />
+              <Route path="/search" component={SearchUsers} />
+              <Route path="/chat" component={Chat} />
+              <Route path="/friends" component={Friends} />
+            </Switch>
           </Fragment>
         </BrowserRouter>
       </Provider>

@@ -123,16 +123,56 @@ router.post(
   "/friends/add/:user_id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    console.log(req.user);
+    // console.log(req.params.user_id);
+    //id of the person sending the friend request
+    let { _id } = req.user;
+    console.log(`Requester Id : ${_id}`);
 
-    res.json({
-      user: {
-        id: req.user.id,
-        name: req.user.name,
-        email: req.user.email,
-        profile_pic: req.user.profile_pic
+    let friendId = req.params.user_id;
+
+    console.log(`Friends Id: ${friendId}`);
+
+    User.findOneAndUpdate(
+      {
+        _id: friendId,
+        //testing how to add and remove users from the request array
+        "pendingFriendsRequests.user": { $ne: _id }
+        // "pendingFriendsRequests.user": _id
+      },
+      // { $addToSet: { pendingFriendsRequests: { user: _id } } },
+      {
+        $addToSet: {
+          pendingFriendsRequests: { user: _id, status: "requested" }
+        }
+      },
+      // { $pull: { pendingFriendsRequests: { user: _id } } },
+
+      err => {
+        if (err) {
+          console.log("Error:", err);
+        } else {
+          // User.findById(friendId)
+          //   .select("-password")
+          //   .populate("pendingFriendsRequests.user")
+          //   .then(result => {
+          //     res.send({ user: result });
+          //   })
+          //   .catch(err => {
+          //     console.log(err);
+          //   });
+          User.find({})
+            .select("-password")
+            .populate("pendingFriendsRequests.user")
+            .then(result => {
+              res.send({ users: result });
+            })
+            .catch(err => {
+              console.log(err);
+            });
+        }
+        // process.exit(0);
       }
-    });
+    );
   }
 );
 module.exports = router;

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { MDBContainer, MDBRow } from "mdbreact";
+import { addFriend } from "../../actions/userAuthActions";
 import {
   MDBBtn as Button,
   MDBCard,
@@ -22,12 +23,12 @@ export class UsersCard extends Component {
   }
 
   handleFriendRequest() {
-    console.log(`Hello from ${this.props.user.name}`);
+    this.props.addFriend(this.props.user._id);
   }
   render() {
     let { user, auth } = this.props;
     // console.log(auth.);
-    console.log(user);
+    // console.log(user);
 
     return (
       <MDBCol size="3">
@@ -60,4 +61,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {};
 
-export default connect(mapStateToProps, mapDispatchToProps)(UsersCard);
+export default connect(
+  mapStateToProps,
+  { addFriend }
+)(UsersCard);

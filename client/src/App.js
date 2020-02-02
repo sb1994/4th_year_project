@@ -48,8 +48,8 @@ class App extends Component {
               <Route path="/login" component={Login} />
               <Route path="/dashboard" component={Dashboard} />
               <Route path="/search" component={SearchUsers} />
-              <Route path="/chat" component={Chat} />
-              <Route path="/friends" component={Friends} />
+              {/* <Route path="/chat" component={Chat} /> */}
+              {/* <Route path="/friends" component={Friends} /> */}
             </Switch>
           </Fragment>
         </BrowserRouter>

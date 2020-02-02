@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import { withRouter } from "react-router-dom";
-//commpoents
-import CurrentFriends from "./CurrentFriends";
-import RequestedFriends from "./RequestedFriends";
+// //commpoents
+// import CurrentFriends from "./CurrentFriends";
+// import RequestedFriends from "./RequestedFriends";
 
 //import the actions
 import { getCurrentUser } from "../../actions/userAuthActions";
@@ -35,8 +35,8 @@ class Friends extends Component {
     return (
       <div>
         <h1>Friends</h1>
-        <RequestedFriends requestedFriends={pendingFriendsRequests} />
-        <CurrentFriends />
+        {/* <RequestedFriends requestedFriends={pendingFriendsRequests} />
+        <CurrentFriends /> */}
       </div>
     );
   }
@@ -47,5 +47,8 @@ const mapStateToProps = state => ({
 });
 
 export default withRouter(
-  connect(mapStateToProps, { getCurrentUser })(Friends)
+  connect(
+    mapStateToProps,
+    { getCurrentUser }
+  )(Friends)
 );

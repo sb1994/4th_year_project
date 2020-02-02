@@ -98,7 +98,7 @@ export const getCurrentUser = () => {
     axios
       .get("api/users/current")
       .then(result => {
-        // console.log(result);
+        console.log(result);
       })
       .catch(err => {
         console.log(err);

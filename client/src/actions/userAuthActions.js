@@ -3,6 +3,7 @@ import setUserToken from "../utils/setUserToken";
 import jwt_decode from "jwt-decode";
 
 import * as types from "./action_types";
+import { request } from "express";
 
 // Register User
 export const registerUser = userData => dispatch => {
@@ -40,6 +41,28 @@ export const addFriend = user_id => dispatch => {
     type: types.ADD_FRIEND
   };
 };
+export const acceptFriendRequest = requesterId => {
+  console.log(requesterId);
+  // axios
+  //   .post(`/api/users/friends/add/${user_id}`, user_id)
+  //   .then(res => {
+  //     dispatch({
+  //       type: types.ADD_FRIEND,
+  //       payload: res.data
+  //     });
+  //     console.log(res.data);
+  //   })
+
+  //   .catch(err =>
+  //     dispatch({
+  //       type: types.FAIL_ADD_FRIEND,
+  //       payload: err.response.data
+  //     })
+  //   );
+  // return {
+  //   type: types.ADD_FRIEND
+  // };
+};
 export const startAuth = () => {
   return {
     type: types.START_AUTH
@@ -68,6 +91,18 @@ export const setLoggedUser = decoded => {
   return {
     type: types.SET_LOGGED_USER,
     payload: decoded
+  };
+};
+export const getCurrentUser = () => {
+  return dispatch => {
+    axios
+      .get("api/users/current")
+      .then(result => {
+        // console.log(result);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 };
 export const loginAuth = (email, password) => {

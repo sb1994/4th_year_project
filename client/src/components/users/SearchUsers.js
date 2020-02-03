@@ -10,7 +10,11 @@ class SearchUsers extends Component {
 
     this.state = {
       users: [],
-      term: ""
+      term: "",
+      totalResults: 0,
+      totalPages: 0,
+      totalPerPage: 0,
+      currentPageNo: 1
     };
     this.handleChange = this.handleChange.bind(this);
   }

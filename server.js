@@ -1,19 +1,16 @@
 const express = require("express");
-const http = require("http");
-const socketio = require("socket.io");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const passport = require("passport");
-// const keys = require("./config/key");
+const http = require("http");
 
+// const keys = require("./config/key");
+const socketio = require("socket.io");
 const cors = require("cors");
 dotenv.config();
 
 const app = express();
-//setup the soketserver
-
-const server = http.createServer(app);
 
 // const db = process.env.DB_URI || "mongodb://localhost:27017/socialweb";
 // const db = "mongodb://localhost:27017/socialweb";
@@ -53,12 +50,18 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
+const server = http.createServer(app);
+const io = socketio(server);
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
-//socketio server
-const io = socketio(server);
-
 io.on("connection", socket => {
   socket.emit("messageFromServer", { data: "Welcome to the SocketIo Server" });
+  socket.on("messageToServer", dataFromClient => {
+    console.log(dataFromClient);
+  });
+  socket.on("newMessageToServer", msg => {
+    console.log(msg);
+    io.emit("messageToClients", { text: msg.text });
+  });
 });

@@ -57,8 +57,8 @@ class Dashboard extends Component {
             <div className="row">
               {/* <h2>NewsFeed</h2> */}
               <div className="col-md-12">
-                <PostForm />
-                <Posts />
+                {/* <PostForm /> */}
+                {/* <Posts /> */}
               </div>
             </div>
           </div>

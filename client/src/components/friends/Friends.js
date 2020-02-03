@@ -3,8 +3,8 @@ import { connect } from "react-redux";
 
 import { withRouter } from "react-router-dom";
 // //commpoents
-// import CurrentFriends from "./CurrentFriends";
-// import RequestedFriends from "./RequestedFriends";
+import CurrentFriends from "./CurrentFriends";
+import RequestedFriends from "./RequestedFriends";
 
 //import the actions
 import { getCurrentUser } from "../../actions/userAuthActions";
@@ -28,15 +28,15 @@ class Friends extends Component {
     }
   }
   render() {
-    console.log(this.props.auth);
+    // console.log(this.props.auth);
     let { friends, pendingFriendsRequests } = this.props.auth.user;
-    console.log(pendingFriendsRequests);
+    // console.log(this.props);
 
     return (
       <div>
         <h1>Friends</h1>
-        {/* <RequestedFriends requestedFriends={pendingFriendsRequests} />
-        <CurrentFriends /> */}
+        <RequestedFriends requestedFriends={pendingFriendsRequests} />
+        {/* <CurrentFriends /> */}
       </div>
     );
   }

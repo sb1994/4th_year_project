@@ -113,15 +113,30 @@ router.get(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     console.log(req.user);
-
-    res.json({
-      user: {
-        id: req.user.id,
-        name: req.user.name,
-        email: req.user.email,
-        profile_pic: req.user.profile_pic
-      }
-    });
+    User.findById(req.user.id)
+      .then(user => {
+        const payload = {
+          id: user.id,
+          name: user.name,
+          profile_pic: user.profile_pic,
+          email: user.email,
+          friends: user.friends,
+          pendingFriendsRequests: user.pendingFriendsRequests
+        };
+        res.json(payload);
+        console.log();
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    // res.json({
+    //   user: {
+    //     id: req.user.id,
+    //     name: req.user.name,
+    //     email: req.user.email,
+    //     profile_pic: req.user.profile_pic
+    //   }
+    // });
   }
 );
 router.post(
@@ -196,51 +211,59 @@ router.post(
 
     console.log(`Requester Id: ${requesterID}`);
 
-    // User.findOneAndUpdate(
-    //   {
-    //     _id: _id,
-    //     //testing how to add and remove users from the request array
-    //     "pendingFriendsRequests.user": _id
-    //     // "pendingFriendsRequests.user": _id
-    //   },
-    //   // { $addToSet: { pendingFriendsRequests: { user: _id } } },
-    //   {
-    //     $pull: {
-    //       pendingFriendsRequests: { user: _id }
-    //     },
-    //     $addToSet: {
-    //       friends: { user: requesterID }
-    //     }
-    //   },
-    //   // { $pull: { pendingFriendsRequests: { user: _id } } },
+    //current users pending/friends end then update the friend who requested
+    User.findOneAndUpdate(
+      {
+        _id: _id,
+        //testing how to add and remove users from the request array
+        "pendingFriendsRequests.user": requesterID
+      },
+      // { $addToSet: { pendingFriendsRequests: { user: _id } } },
+      // {
+      {
+        $pull: {
+          pendingFriendsRequests: { user: requesterID }
+        },
+        $addToSet: {
+          friends: { user: requesterID }
+        }
+      },
+      //   $addToSet: {
+      //     friends: { user: requesterID }
+      //   }
+      // },
+      // { $pull: { pendingFriendsRequests: { user: requesterID } } },
 
-    //   err => {
-    //     if (err) {
-    //       console.log("Error:", err);
-    //     } else {
-    //       // User.findById(friendId)
-    //       //   .select("-password")
-    //       //   .populate("pendingFriendsRequests.user")
-    //       //   .then(result => {
-    //       //     res.send({ user: result });
-    //       //   })
-    //       //   .catch(err => {
-    //       //     console.log(err);
-    //       //   });
-    //       User.find({})
-    //         .select("-password")
-    //         .populate("friends.user")
-    //         .populate("pendingFriendsRequests.user")
-    //         .then(result => {
-    //           res.send({ users: result });
-    //         })
-    //         .catch(err => {
-    //           console.log(err);
-    //         });
-    //     }
-    //     // process.exit(0);
-    //   }
-    // );
+      err => {
+        if (err) {
+          console.log("Error:", err);
+        } else {
+          console.log("Im Herre");
+
+          // User.findById(friendId)
+          //   .select("-password")
+          //   .populate("pendingFriendsRequests.user")
+          //   .then(result => {
+          //     res.send({ user: result });
+          //   })
+          //   .catch(err => {
+          //     console.log(err);
+          //   });
+          // User.find({})
+          //   .select("-password")
+          //   .populate("friends.user")
+          //   .populate("pendingFriendsRequests.user")
+          //   .then(result => {
+          //     res.send({ users: result });
+          //     console.log(result.data);
+          //   })
+          //   .catch(err => {
+          //     console.log(err);
+          //   });
+        }
+        // process.exit(0);
+      }
+    );
   }
 );
 module.exports = router;

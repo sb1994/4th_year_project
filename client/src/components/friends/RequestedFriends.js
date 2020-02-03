@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-
 import RequestedFriendCard from "./RequestedFriendCard";
+
 export class RequestedFriends extends Component {
   constructor(props) {
     super(props);
@@ -16,9 +16,14 @@ export class RequestedFriends extends Component {
     });
   }
   render() {
-    let renderRequests = this.state.requests.map(request => (
-      <RequestedFriendCard key={request._id} request={request} />
-    ));
+    let renderRequests;
+    if (this.state.requests && this.state.requests.length > 0) {
+      renderRequests = this.state.requests.map(request => (
+        <RequestedFriendCard key={request._id} request={request} />
+      ));
+    } else {
+      return <div>this is not working</div>;
+    }
     return (
       <div>
         <h2>Requested Friends</h2>
@@ -34,4 +39,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {};
 
-export default connect(mapStateToProps, mapDispatchToProps)(RequestedFriends);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(RequestedFriends);

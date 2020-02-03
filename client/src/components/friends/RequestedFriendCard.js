@@ -16,15 +16,24 @@ export class RequestedFriendCard extends Component {
 
     this.state = {};
     this.handleAcceptFriendRequest = this.handleAcceptFriendRequest.bind(this);
+    this.handleCancelFriendRequest = this.handleCancelFriendRequest.bind(this);
   }
   handleAcceptFriendRequest() {
     // console.log(this.props.request.user._id, this.props.auth.user.id);
-    this.props.acceptFriendRequest(this.props.request.user._id);
+    let { request } = this.props;
+    this.props.acceptFriendRequest(request.user._id);
+    console.log(request);
+  }
+  handleCancelFriendRequest() {
+    // console.log(this.props.request.user._id, this.props.auth.user.id);
+    // this.props.acceptFriendRequest(this.props.request.user._id);
+    let { request } = this.props;
+    console.log(request);
   }
   render() {
     // console.log(this.props.request.user);
     let { request, auth } = this.props;
-    console.log(request);
+    // console.log(request);
 
     return (
       <div>
@@ -41,9 +50,14 @@ export class RequestedFriendCard extends Component {
               {// isA
               request.status === "requested" &&
               request.user._id !== auth.user.id ? (
-                <Button onClick={this.handleAcceptFriendRequest} color="blue">
-                  Accept
-                </Button>
+                <div>
+                  <Button onClick={this.handleAcceptFriendRequest} color="blue">
+                    Accept
+                  </Button>
+                  <Button onClick={this.handleCancelFriendRequest} color="blue">
+                    Cancel
+                  </Button>
+                </div>
               ) : (
                 ""
               )}
@@ -61,6 +75,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {};
 
-export default connect(mapStateToProps, { acceptFriendRequest })(
-  RequestedFriendCard
-);
+export default connect(
+  mapStateToProps,
+  { acceptFriendRequest }
+)(RequestedFriendCard);

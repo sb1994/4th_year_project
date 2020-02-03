@@ -3,7 +3,6 @@ import setUserToken from "../utils/setUserToken";
 import jwt_decode from "jwt-decode";
 
 import * as types from "./action_types";
-import { request } from "express";
 
 // Register User
 export const registerUser = userData => dispatch => {
@@ -21,13 +20,12 @@ export const registerUser = userData => dispatch => {
 
 export const addFriend = user_id => dispatch => {
   // console.log(user_id);
+  dispatch({
+    type: types.ADD_FRIEND
+  });
   axios
     .post(`/api/users/friends/add/${user_id}`, user_id)
     .then(res => {
-      dispatch({
-        type: types.ADD_FRIEND,
-        payload: res.data
-      });
       console.log(res.data);
     })
 
@@ -42,7 +40,18 @@ export const addFriend = user_id => dispatch => {
   };
 };
 export const acceptFriendRequest = requesterId => {
-  console.log(requesterId);
+  axios
+    .post(`/api/users/friends/accept/${requesterId}`)
+    .then(result => {
+      console.log(result.data);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  // console.log(requesterId);
+  return {
+    type: types.ACCEPT_FRIEND
+  };
   // axios
   //   .post(`/api/users/friends/add/${user_id}`, user_id)
   //   .then(res => {
@@ -98,7 +107,8 @@ export const getCurrentUser = () => {
     axios
       .get("api/users/current")
       .then(result => {
-        console.log(result);
+        dispatch(setLoggedUser(result.data));
+        // console.log(result.data);
       })
       .catch(err => {
         console.log(err);

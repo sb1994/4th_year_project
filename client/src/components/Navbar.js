@@ -41,13 +41,8 @@ class Navbar extends Component {
           </NavLink>
         </NavItem>
         <NavItem>
-          <NavLink to="/chat" className="white-text">
-            Chat
-          </NavLink>
-        </NavItem>
-        <NavItem>
           <NavLink to="/friends" className="white-text">
-            Friends
+            friends
           </NavLink>
         </NavItem>
         <NavItem>

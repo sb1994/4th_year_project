@@ -9,7 +9,10 @@ import {
   MDBCardText,
   MDBCol
 } from "mdbreact";
-import { acceptFriendRequest } from "../../actions/userAuthActions";
+import {
+  acceptFriendRequest,
+  cancelFriendRequest
+} from "../../actions/userAuthActions";
 export class RequestedFriendCard extends Component {
   constructor(props) {
     super(props);
@@ -22,13 +25,13 @@ export class RequestedFriendCard extends Component {
     // console.log(this.props.request.user._id, this.props.auth.user.id);
     let { request } = this.props;
     this.props.acceptFriendRequest(request.user._id);
-    console.log(request);
+    // console.log(request);
   }
   handleCancelFriendRequest() {
     // console.log(this.props.request.user._id, this.props.auth.user.id);
     // this.props.acceptFriendRequest(this.props.request.user._id);
     let { request } = this.props;
-    console.log(request);
+    this.props.cancelFriendRequest(request.user._id);
   }
   render() {
     // console.log(this.props.request.user);
@@ -77,5 +80,5 @@ const mapDispatchToProps = {};
 
 export default connect(
   mapStateToProps,
-  { acceptFriendRequest }
+  { acceptFriendRequest, cancelFriendRequest }
 )(RequestedFriendCard);

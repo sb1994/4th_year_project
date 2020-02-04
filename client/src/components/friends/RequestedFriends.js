@@ -16,13 +16,17 @@ export class RequestedFriends extends Component {
     });
   }
   render() {
+    let { pendingFriendsRequests } = this.props.auth.user;
+    console.log(pendingFriendsRequests);
+    console.log(this.props.auth.user.pendingFriendsRequests);
+
     let renderRequests;
-    if (this.state.requests && this.state.requests.length > 0) {
-      renderRequests = this.state.requests.map(request => (
+    if (pendingFriendsRequests && pendingFriendsRequests.length > 0) {
+      renderRequests = pendingFriendsRequests.map(request => (
         <RequestedFriendCard key={request._id} request={request} />
       ));
     } else {
-      return <div>this is not working</div>;
+      return <div>You have no pending friend requests</div>;
     }
     return (
       <div>

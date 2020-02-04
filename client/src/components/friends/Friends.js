@@ -36,7 +36,7 @@ class Friends extends Component {
       <div>
         <h1>Friends</h1>
         <RequestedFriends requestedFriends={pendingFriendsRequests} />
-        {/* <CurrentFriends /> */}
+        <CurrentFriends friends={friends} />
       </div>
     );
   }

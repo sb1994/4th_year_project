@@ -72,4 +72,7 @@ const mapStateToProps = state => ({
   search: state.search
 });
 
-export default connect(mapStateToProps, { getUsers })(SearchUsers);
+export default connect(
+  mapStateToProps,
+  { getUsers }
+)(SearchUsers);

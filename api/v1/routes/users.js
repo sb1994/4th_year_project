@@ -114,6 +114,8 @@ router.get(
   (req, res) => {
     console.log(req.user);
     User.findById(req.user.id)
+      .populate("pendingFriendsRequests.user")
+      .populate("friends.user")
       .then(user => {
         const payload = {
           id: user.id,
@@ -199,6 +201,93 @@ router.post(
 
 router.post(
   "/friends/accept/:user_id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    // console.log(req.params.user_id);
+    //id of the person accepting the friend request
+    let { _id } = req.user;
+
+    console.log(`Reciver Id : ${_id}`);
+
+    let requesterID = req.params.user_id;
+
+    console.log(`Requester Id: ${requesterID}`);
+
+    //current users pending/friends end then update the friend who requested
+    User.findOneAndUpdate(
+      {
+        _id: _id,
+        "friends.user": { $ne: requesterID }
+      },
+      {
+        $pull: {
+          pendingFriendsRequests: { user: requesterID }
+        },
+        $addToSet: {
+          friends: { user: requesterID }
+        }
+      },
+
+      err => {
+        if (err) {
+          console.log("Error:", err);
+        } else {
+          console.log("Updating ");
+          User.findOneAndUpdate(
+            {
+              _id: requesterID,
+              "friends.user": { $ne: _id }
+            },
+            {
+              $addToSet: {
+                friends: { user: _id }
+              }
+            },
+            err => {
+              if (err) {
+                console.log(err);
+              } else {
+                User.findById(_id)
+                  .select("-password")
+                  .populate("pendingFriendsRequests.user")
+                  .populate("friends.user")
+                  .then(user => {
+                    res.send({ user });
+                  })
+                  .catch(err => {
+                    console.log(err);
+                  });
+              }
+            }
+          );
+          // User.findById(friendId)
+          //   .select("-password")
+          //   .populate("pendingFriendsRequests.user")
+          //   .then(result => {
+          //     res.send({ user: result });
+          //   })
+          //   .catch(err => {
+          //     console.log(err);
+          //   });
+          // User.find({})
+          //   .select("-password")
+          //   .populate("friends.user")
+          //   .populate("pendingFriendsRequests.user")
+          //   .then(result => {
+          //     res.send({ users: result });
+          //     console.log(result.data);
+          //   })
+          //   .catch(err => {
+          //     console.log(err);
+          //   });
+        }
+        // process.exit(0);
+      }
+    );
+  }
+);
+router.post(
+  "/friends/cancel/:user_id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     // console.log(req.params.user_id);

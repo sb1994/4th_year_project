@@ -8,7 +8,11 @@ export class Chat extends Component {
   }
   componentDidMount() {
     socket.on("connect", () => {
-      console.log(socket.id);
+      // console.log(socket.id);
+      console.log("you are connected to the socket server");
+    });
+    socket.on("disconnect", () => {
+      console.log("Disconnected from server");
     });
   }
   render() {
@@ -32,7 +36,4 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {};
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Chat);
+export default connect(mapStateToProps, mapDispatchToProps)(Chat);

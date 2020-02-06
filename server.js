@@ -56,12 +56,20 @@ const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
 io.on("connection", socket => {
-  socket.emit("messageFromServer", { data: "Welcome to the SocketIo Server" });
-  socket.on("messageToServer", dataFromClient => {
-    console.log(dataFromClient);
+  // socket.emit("messageFromServer", { data: "Welcome to the SocketIo Server" });
+  // socket.on("messageToServer", dataFromClient => {
+  //   console.log(dataFromClient);
+  // });
+  // socket.on("newMessageToServer", msg => {
+  //   console.log(msg);
+  //   io.emit("messageToClients", { text: msg.text });
+  // });
+  console.log("User has logged in and connected to socket");
+
+  socket.on("disconnect", () => {
+    console.log("Client was disconnected from the server");
   });
-  socket.on("newMessageToServer", msg => {
-    console.log(msg);
-    io.emit("messageToClients", { text: msg.text });
-  });
+});
+io.on("disconnect", () => {
+  console.log("Client was disconnected from the server");
 });

@@ -112,7 +112,7 @@ router.get(
   "/current",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    console.log(req.user);
+    // console.log(req.user);
     User.findById(req.user.id)
       .populate("pendingFriendsRequests.user")
       .populate("friends.user")

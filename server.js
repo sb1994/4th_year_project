@@ -10,6 +10,7 @@ const socketio = require("socket.io");
 const cors = require("cors");
 dotenv.config();
 
+const { generateMessage } = require("./config/message");
 const app = express();
 
 // const db = process.env.DB_URI || "mongodb://localhost:27017/socialweb";
@@ -55,21 +56,48 @@ const io = socketio(server);
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
+///socket variables
+
+let usersSock = [];
+let connections = [];
 io.on("connection", socket => {
-  // socket.emit("messageFromServer", { data: "Welcome to the SocketIo Server" });
-  // socket.on("messageToServer", dataFromClient => {
-  //   console.log(dataFromClient);
-  // });
-  // socket.on("newMessageToServer", msg => {
-  //   console.log(msg);
-  //   io.emit("messageToClients", { text: msg.text });
-  // });
+  connections.push(socket);
+
+  console.log(`Sockets connected: ${connections.length}`);
+
+  //connects disconnection
+  socket.on("disconnect", data => {
+    connections.splice(connections.indexOf(socket), 1);
+    console.log(`Socket Disconnected: ${connections.length} `);
+  });
+
+  socket.on("send message", data => {
+    io.emit("newMessage", {
+      msg: data.text,
+      id: data.id
+    });
+    console.log(data);
+  });
+
   console.log("User has logged in and connected to socket");
 
-  socket.on("disconnect", () => {
-    console.log("Client was disconnected from the server");
-  });
-});
-io.on("disconnect", () => {
-  console.log("Client was disconnected from the server");
+  // socket.emit(
+  //   "newMessage",
+  //   generateMessage("Admin", "Welcome to the chat app")
+  // );
+
+  // socket.broadcast.emit(
+  //   "newMessage",
+  //   generateMessage("Admin", "New User has joind the Chat app")
+  // );
+
+  // socket.on("createMessage", (message, callback) => {
+  //   console.log("createMessage", message);
+  //   io.emit("newMessage", generateMessage(message.from, message.text));
+  //   callback("This is the server");
+  // });
+  // socket.emit("newMessage", { from: "Joe", text: "Help me with this project" });
+  // socket.on("disconnect", () => {
+  //   console.log("Client was disconnected from the server");
+  // });
 });

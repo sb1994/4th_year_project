@@ -4,7 +4,8 @@
   "description": "MERN App for my final year project. It will also act as the API for Mobile applications",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha config/*.test.js",
+    "test-watch": "nodemon --exec \"npm test\"",
     "start": "node server.js",
     "server": "nodemon server.js",
     "users": "nodemon users.js",
@@ -30,6 +31,7 @@
     "concurrently": "^5.0.0",
     "cors": "^2.8.5",
     "dotenv": "^8.1.0",
+    "expect": "^25.1.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "momentjs": "^2.0.0",
@@ -40,5 +42,9 @@
     "react-google-maps": "^9.4.5",
     "react-moment": "^0.9.6",
     "socket.io": "^2.3.0"
+  },
+  "devDependencies": {
+    "mocha": "^7.0.1",
+    "expect": "^25.1.0"
   }
 }

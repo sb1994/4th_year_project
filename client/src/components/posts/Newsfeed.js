@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import PostForm from "./PostForm";
-import Post from "./Post";
-import { getPosts } from "../../actions/postActions";
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import PostForm from './PostForm'
+import Post from './Post'
+import { getPosts } from '../../actions/postActions'
 export class Newsfeed extends Component {
   componentDidMount() {
     // console.log();
@@ -12,12 +12,12 @@ export class Newsfeed extends Component {
   }
 
   render() {
-    let { posts } = this.props.posts;
-    console.log(posts);
+    let { posts } = this.props.posts
+    // console.log(posts);
 
     let newsFeedContent = posts.map(post => {
-      return <Post key={post._id} post={post} />;
-    });
+      return <Post key={post._id} post={post} />
+    })
     // console.log(this.props);
 
     return (
@@ -25,13 +25,13 @@ export class Newsfeed extends Component {
         <h2>NewsFeed</h2>
         {newsFeedContent}
       </div>
-    );
+    )
   }
 }
 
 const mapStateToProps = state => ({
   posts: state.posts,
   auth: state.auth
-});
+})
 
-export default connect(mapStateToProps, { getPosts })(Newsfeed);
+export default connect(mapStateToProps, { getPosts })(Newsfeed)

@@ -10,10 +10,14 @@ export class ConnectedList extends Component {
     this.state = {
       loggedUsers: {}
     }
+
     // this.socket = io('http://localhost:5000', {
     //   query: { currentUser: this.props.auth.user.id }
     // })
-    this.socket = io('http://localhost:5000', {
+    // this.socket = io('http://localhost:5000', {
+    //   query: { currentUser: this.props.auth.user.id }
+    // })
+    this.socket = io(process.env.REACT_APP_SOCKET, {
       query: { currentUser: this.props.auth.user.id }
     })
     this.getCurrentUsers = this.getCurrentUsers.bind(this)
@@ -33,6 +37,7 @@ export class ConnectedList extends Component {
   }
 
   componentDidMount() {
+    console.log(process.env.REACT_APP_SOCKET_URI)
     // console.log(this.props.auth.user.id)
     this.getCurrentUsers(this.socket)
     // console.log(this.socket)
@@ -66,8 +71,11 @@ export class ConnectedList extends Component {
     return (
       <div>
         <h1>Connected Friends List</h1>
-        <ConnectedUsers connectedUsers={this.state.loggedUsers} />
-        <button onClick={this.getState}>Log State</button>
+        <ConnectedUsers
+          socket={this.socket}
+          connectedUsers={this.state.loggedUsers}
+        />
+        {/* <button onClick={this.getState}>Log State</button> */}
       </div>
     )
   }

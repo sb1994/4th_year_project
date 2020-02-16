@@ -6,8 +6,8 @@ class ConnectedUsers extends Component {
     // console.log(this.props.auth)
   }
   render() {
-    let { auth, connectedUsers } = this.props
-    // console.log(auth.user)
+    let { auth, connectedUsers, socket } = this.props
+    console.log(socket)
 
     // console.log(connectedUsers)
     let renderUsers = []
@@ -26,7 +26,12 @@ class ConnectedUsers extends Component {
         <li key={index} className='list-group-item'>
           <div>
             {user.name}
-            {/* <img src={user.profile_pic} alt='' srcset='' /> */}
+            <img
+              src={user.profile_pic}
+              alt=''
+              srcset=''
+              className='img-fluid img-thumbnail'
+            />
             {/* <img src={user.profile_pic} alt='' srcset='' /> */}
           </div>
         </li>

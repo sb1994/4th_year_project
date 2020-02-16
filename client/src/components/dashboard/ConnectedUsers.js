@@ -24,7 +24,11 @@ class ConnectedUsers extends Component {
     renderUsers = renderUsers.map((user, index) => {
       return (
         <li key={index} className='list-group-item'>
-          {user.name}
+          <div>
+            {user.name}
+            {/* <img src={user.profile_pic} alt='' srcset='' /> */}
+            {/* <img src={user.profile_pic} alt='' srcset='' /> */}
+          </div>
         </li>
       )
     })

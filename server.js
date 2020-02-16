@@ -57,6 +57,10 @@ const io = socketio(server)
 const PORT = process.env.PORT || 5000
 server.listen(PORT, () => console.log(`Server running on port ${PORT}`))
 
+app.io = io
+
+module.exports = server
+
 ///socket variables
 
 let usersSock = []
@@ -72,11 +76,16 @@ io.on('connection', socket => {
     .select('-friends')
     .select('-pendingFriendsRequests')
     .then(user => {
-      console.log(user)
-      // connections[socket.id] = user
-      // console.log(connections.lengt)
+      socket.user = user
 
-      io.emit('new user logged in', { connections })
+      // console.log(socket)
+
+      connections[socket.id] = user
+
+      // console.log(connections.lengt)
+      // console.log(connections)
+      // console.log(socket.id)
+      io.emit('newUserConnected', { connections })
     })
     .catch(err => {
       console.log(err)
@@ -89,10 +98,13 @@ io.on('connection', socket => {
   // //connects disconnection
   socket.on('disconnect', data => {
     // connections.splice(connections.indexOf(socket), 1)
-    console.log(`Socket Disconnected: ${connections.length} `)
+    console.log(`Socket Disconnected: ${socket.id} `)
+
+    delete connections[socket.id]
     // connections = connections.filter(socket => connections.includes(socket.id))
     // connections = Object.keys(connections).filter(key => key !== socket.id)
     // console.log(connections)
+    io.emit('currentUsers', { connections })
   })
 
   // socket.on("send message", data => {

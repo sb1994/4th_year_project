@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import io from 'socket.io-client'
 import ConnectedUsers from './ConnectedUsers'
+import ChatDashboard from '../chat/ChatDashboard'
 // const socket
 export class ConnectedList extends Component {
   constructor(props) {
@@ -17,6 +18,7 @@ export class ConnectedList extends Component {
     // this.socket = io('http://localhost:5000', {
     //   query: { currentUser: this.props.auth.user.id }
     // })
+
     this.socket = io(process.env.REACT_APP_SOCKET, {
       query: { currentUser: this.props.auth.user.id }
     })
@@ -37,8 +39,8 @@ export class ConnectedList extends Component {
   }
 
   componentDidMount() {
-    console.log(process.env.REACT_APP_SOCKET_URI)
-    // console.log(this.props.auth.user.id)
+    // console.log(process.env.REACT_APP_SOCKET_URI)
+    // // console.log(this.props.auth.user.id)
     this.getCurrentUsers(this.socket)
     // console.log(this.socket)
   }
@@ -66,16 +68,13 @@ export class ConnectedList extends Component {
     // console.log(this.state)
     let { loggedUsers } = this.state
 
-    console.log(loggedUsers)
+    // console.log(loggedUsers)
 
     return (
-      <div>
-        <h1>Connected Friends List</h1>
-        <ConnectedUsers
-          socket={this.socket}
-          connectedUsers={this.state.loggedUsers}
-        />
-        {/* <button onClick={this.getState}>Log State</button> */}
+      <div className='col-md-4'>
+        {/* <h1>Connected Friends List</h1> */}
+        <ConnectedUsers socket={this.socket} connectedUsers={loggedUsers} />
+        <ChatDashboard socket={this.socket} />
       </div>
     )
   }

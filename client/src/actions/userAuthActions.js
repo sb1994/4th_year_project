@@ -121,17 +121,44 @@ export const setLoggedUser = decoded => {
     payload: decoded
   }
 }
+
 export const getCurrentUser = () => {
   return dispatch => {
     axios
-      .get('api/users/current')
+      .get('/api/users/current')
       .then(result => {
-        dispatch(setLoggedUser(result.data))
+        console.log(result)
+
+        dispatch(setLoggedUser(result.data.user))
         // console.log(result.data);
       })
       .catch(err => {
         console.log(err)
       })
+  }
+}
+export const getSearchedUser = id => {
+  return dispatch => {
+    axios
+      .get(`/api/users/${id}`)
+      // .get(`https://jsonplaceholder.typicode.com/todos/1`)
+      .then(result => {
+        // dispatch(setLoggedUser(result.data.user))
+        dispatch(setSearchedUser(result.data.user[0]))
+        console.log(result.data.user[0])
+
+        // dispatch(setSearchedUser(result.data.user[0]))
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+}
+
+export const setSearchedUser = user => {
+  return {
+    type: types.SET_SEARCHED_USER,
+    payload: user
   }
 }
 export const loginAuth = (email, password) => {

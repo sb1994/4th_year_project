@@ -7,7 +7,7 @@ const http = require('http')
 const User = require('./api/v1/models/User')
 
 // const keys = require("./config/key");
-const socketio = require('socket.io')
+const socketio = (module.exports.socketio = require('socket.io'))
 const cors = require('cors')
 dotenv.config()
 
@@ -116,24 +116,4 @@ io.on('connection', socket => {
   // });
 
   console.log('User has logged in and connected to socket')
-
-  // socket.emit(
-  //   "newMessage",
-  //   generateMessage("Admin", "Welcome to the chat app")
-  // );
-
-  // socket.broadcast.emit(
-  //   "newMessage",
-  //   generateMessage("Admin", "New User has joind the Chat app")
-  // );
-
-  // socket.on("createMessage", (message, callback) => {
-  //   console.log("createMessage", message);
-  //   io.emit("newMessage", generateMessage(message.from, message.text));
-  //   callback("This is the server");
-  // });
-  // socket.emit("newMessage", { from: "Joe", text: "Help me with this project" });
-  // socket.on("disconnect", () => {
-  //   console.log("Client was disconnected from the server");
-  // });
 })

@@ -8,12 +8,35 @@ const passport = require('passport')
 const User = require('../models/User')
 
 router.get('/test', (req, res) => res.json({ msg: 'Users Works' }))
-
+router.get(
+  '/current',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    User.findById(req.user.id, (err, user) => {
+      res.json({
+        user: user
+      })
+    })
+    // res.json({
+    //   id: req.user.id,
+    //   name: req.user.name,
+    //   email: req.user.email
+    // });
+  }
+)
 router.get('/', (req, res) => {
   User.find({})
     .select('-password')
     .then(users => {
       res.json({ users: users })
+    })
+    .catch(err => {})
+})
+router.get('/:id', (req, res) => {
+  User.find({ _id: req.params.id })
+    .select('-password')
+    .then(user => {
+      res.json({ user: user })
     })
     .catch(err => {})
 })
@@ -36,7 +59,13 @@ router.post('/register', (req, res) => {
           email: req.body.email,
           profile_pic:
             'https://ctvalleybrewing.com/wp-content/uploads/2017/04/avatar-placeholder.png',
-          password: req.body.password
+          password: req.body.password,
+          company: '',
+          website: '',
+          location: '',
+          status: '',
+          bio: '',
+          githubusername: ''
         })
         // console.log(newUser);
         bcrypt.genSalt(10, (err, salt) => {

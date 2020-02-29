@@ -1,11 +1,11 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
 
 // Create Schema
 const PostSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
-    ref: "users"
+    ref: 'users'
   },
   text: {
     type: String
@@ -15,23 +15,27 @@ const PostSchema = new Schema({
   },
   comments: [
     {
-      name: "comment",
+      name: 'comment',
       type: Schema.Types.ObjectId,
-      ref: "comments"
+      ref: 'comments'
     }
   ],
   likes: [
     {
       user: {
         type: Schema.Types.ObjectId,
-        ref: "users"
+        ref: 'users'
       }
     }
   ],
+  feedId: {
+    type: Schema.Types.ObjectId,
+    ref: 'users'
+  },
   created: {
     type: Date,
     default: Date.now
   }
-});
+})
 
-module.exports = Post = mongoose.model("posts", PostSchema);
+module.exports = Post = mongoose.model('posts', PostSchema)

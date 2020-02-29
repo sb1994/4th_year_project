@@ -2,8 +2,18 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 class ConnectedUsers extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {}
+    this.joinPrivateChat = this.joinPrivateChat.bind(this)
+  }
+
   componentDidMount() {
     // console.log(this.props.auth)
+  }
+  joinPrivateChat() {
+    console.log('This is a new chat')
   }
   render() {
     let { auth, connectedUsers, socket } = this.props
@@ -23,13 +33,17 @@ class ConnectedUsers extends Component {
 
     renderUsers = renderUsers.map((user, index) => {
       return (
-        <li key={index} className='list-group-item'>
+        <li
+          key={index}
+          className='list-group-item'
+          onClick={this.joinPrivateChat}
+        >
           <div>
             {user.name}
             <img
+              style={{ height: '50px' }}
               src={user.profile_pic}
               alt=''
-              srcset=''
               className='img-fluid img-thumbnail'
             />
             {/* <img src={user.profile_pic} alt='' srcset='' /> */}
@@ -37,27 +51,9 @@ class ConnectedUsers extends Component {
         </li>
       )
     })
-
-    // let renderconnectedUsers = connectedUsers.map(user => {
-    //   if (user._id !== auth.user.id) {
-    //     console.log(user)
-    //   }
-    // })
-
-    // console.log(connectedUsers)
-
-    // console.log(this.props.connectedUsers)
-
     return (
       <div>
-        <ul className='list-group'>
-          {renderUsers}
-          {/* <li className='list-group-item'>Cras justo odio</li>
-          <li className='list-group-item'>Dapibus ac facilisis in</li>
-          <li className='list-group-item'>Morbi leo risus</li>
-          <li className='list-group-item'>Porta ac consectetur ac</li>
-          <li className='list-group-item'>Vestibulum at eros</li> */}
-        </ul>
+        <ul className='list-group'>{renderUsers}</ul>
       </div>
     )
   }

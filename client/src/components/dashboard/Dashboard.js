@@ -5,7 +5,7 @@ import PostForm from '../posts/PostForm'
 import ConnectedList from './ConnectedList'
 import Posts from '../posts/Posts'
 import { getPosts } from '../../actions/postActions'
-
+import ProfileCard from './ProfileCard'
 class Dashboard extends Component {
   constructor(props) {
     super(props)
@@ -44,16 +44,7 @@ class Dashboard extends Component {
       <Fragment>
         <h1>Dashboard</h1>
         <div className='row'>
-          <div className='col-md-2 card' style={style.profile}>
-            <div className='card-body'>
-              <h2 className='card-title'>{user.name}</h2>
-              <img
-                src={user.profile_pic}
-                alt='Profile Pic'
-                className='img-fluid'
-              />
-            </div>
-          </div>
+          <ProfileCard user={user} />
           <div className='col-md-6'>
             <div className='row'>
               <div className='col-md-12'>
@@ -62,9 +53,7 @@ class Dashboard extends Component {
               </div>
             </div>
           </div>
-          <div className='col-md-4'>
-            <ConnectedList />
-          </div>
+          <div className='col-md-4'>{/* <ConnectedList /> */}</div>
         </div>
       </Fragment>
     )

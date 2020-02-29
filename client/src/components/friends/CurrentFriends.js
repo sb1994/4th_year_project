@@ -1,37 +1,32 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { CurrentFriendCard } from "./CurrentFriendCard";
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { CurrentFriendCard } from './CurrentFriendCard'
 
 class CurrentFriends extends Component {
   render() {
-    let { friends } = this.props.auth.user;
-    let renderFriends;
+    let { friends } = this.props.auth.user
+    let renderFriends
 
     if (friends && friends.length > 0) {
       renderFriends = friends.map(friend => {
-        return <CurrentFriendCard key={friend.user} user={friend.user} />;
-      });
+        return <CurrentFriendCard key={friend.user} user={friend.user} />
+      })
     } else {
-      renderFriends = <div>You have no Friends</div>;
+      renderFriends = <div>You have no Friends</div>
     }
-    // console.log(friends);
-
     return (
       <div>
         <h2>Current Friends</h2>
         {renderFriends}
       </div>
-    );
+    )
   }
 }
 
 const mapStateToProps = state => ({
   auth: state.auth
-});
+})
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {}
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CurrentFriends);
+export default connect(mapStateToProps, mapDispatchToProps)(CurrentFriends)

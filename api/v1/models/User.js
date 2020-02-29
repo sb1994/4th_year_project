@@ -18,6 +18,21 @@ const UserSchema = new Schema({
   profile_pic: {
     type: String
   },
+  website: {
+    type: String
+  },
+  location: {
+    type: String
+  },
+  status: {
+    type: String
+  },
+  bio: {
+    type: String
+  },
+  githubusername: {
+    type: String
+  },
   friends: [
     {
       user: {

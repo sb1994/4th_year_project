@@ -30,7 +30,7 @@ router.get('/', (req, res) => {
     .then(users => {
       res.json({ users: users })
     })
-    .catch(err => {})
+    .catch(err => { })
 })
 router.get('/:id', (req, res) => {
   User.find({ _id: req.params.id })
@@ -38,7 +38,7 @@ router.get('/:id', (req, res) => {
     .then(user => {
       res.json({ user: user })
     })
-    .catch(err => {})
+    .catch(err => { })
 })
 
 router.post('/register', (req, res) => {
@@ -103,41 +103,26 @@ router.post('/login', (req, res) => {
         if (isMatch) {
           //user matched create the payload taht will
           // be sent in the token
-          if (user.active) {
-            return res.status(404).json({ email: 'You already Logied it' })
-          } else {
-            User.findByIdAndUpdate(
-              { _id: user._id },
-              { active: true },
-              (err, user) => {
-                console.log(user)
-
-                const payload = {
-                  id: user.id,
-                  name: user.name,
-                  profile_pic: user.profile_pic,
-                  email: user.email,
-                  friends: user.friends,
-                  pendingFriendsRequests: user.pendingFriendsRequests
-                }
-                console.log(payload)
-                // Sign Token
-                console.log('keys')
-                jwt.sign(
-                  payload,
-                  keys.secretOrKey,
-                  { expiresIn: 3600 * 1000 * 1000 * 20 },
-                  (err, token) => {
-                    res.json({
-                      success: true,
-                      token: `${token}`
-                    })
-                    console.log(token)
-                  }
-                )
-              }
-            )
+          const payload = {
+            id: user.id,
+            name: user.name,
+            profile_pic: user.profile_pic,
+            email: user.email,
+            friends: user.friends,
+            pendingFriendsRequests: user.pendingFriendsRequests
           }
+          jwt.sign(
+            payload,
+            keys.secretOrKey,
+            { expiresIn: 3600 * 1000 * 1000 * 20 },
+            (err, token) => {
+              res.json({
+                success: true,
+                token: `${token}`
+              })
+              console.log(token)
+            }
+          )
         } else {
           return res.status(200).json({ msg: 'password failed' })
         }

@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 import Moment from 'react-moment'
+import { connect } from "react-redux";
+//user reder actions
+import { deletePost } from "../../actions/postActions";
 import CommentList from './CommentList'
 import CommentForm from './CommentForm'
 export class Post extends Component {
@@ -9,6 +12,7 @@ export class Post extends Component {
       showComments: false
     }
     this.showComments = this.showComments.bind(this)
+    this.deletePost = this.deletePost.bind(this)
   }
   componentDidMount() {
     // console.log(this.props.post);
@@ -24,8 +28,15 @@ export class Post extends Component {
       })
     }
   }
+  deletePost() {
+    let { post, auth } = this.props
+    this.props.deletePost(post._id, post.feedId)
+
+  }
   render() {
     const { showComments } = this.state
+    let { user, isAuthenticated } = this.props.auth
+    let { post } = this.props
     return (
       <div className='post-form mb-3'>
         <div className='card card-info'>
@@ -33,32 +44,36 @@ export class Post extends Component {
             <div className='row'>
               <div className='col-md-6'>
                 <img
-                  src={this.props.post.user.profile_pic}
+                  src={post.user.profile_pic}
                   alt='Card image cap'
                   style={style}
                 />
-                <span>{this.props.post.user.name}</span>
+                <span>{post.user.name}</span>
               </div>
               <div className='col-md-6'>
                 <Moment className='text-right' format='YYYY/MM/DD'>
-                  {this.props.post.created}
+                  {post.created}
                 </Moment>
+                {
+
+                  user.id === post.feedId ? <button className="btn btn-danger" onClick={this.deletePost}>X</button> : ''
+                }
               </div>
             </div>
           </div>
           <div className='card-body'>
             <div className='row'>
-              <div className='col-md-12'>{this.props.post.text}</div>
+              <div className='col-md-12'>{post.text}</div>
               <div className='col-md-12'>
-                {this.props.post.postImgURL === undefined ? (
+                {post.postImgURL === undefined ? (
                   ''
                 ) : (
-                  <img
-                    className='img-fluid'
-                    src={this.props.post.postImgURL}
-                    alt='Post Image'
-                  />
-                )}
+                    <img
+                      className='img-fluid'
+                      src={post.postImgURL}
+                      alt='Post Image'
+                    />
+                  )}
               </div>
               <hr />
               <div className='col-md-12'>
@@ -70,12 +85,15 @@ export class Post extends Component {
                 <hr />
                 {showComments ? (
                   <div className='row'>
-                    <CommentForm post_id={this.props.post._id} />
-                    <CommentList comments={this.props.post.comments} />
+                    {
+                      isAuthenticated ? (<CommentForm post_id={post._id} />) : (<p>Please Login</p>)
+
+                    }
+                    <CommentList post={post} comments={post.comments} feedId={post.feedId} />
                   </div>
                 ) : (
-                  ''
-                )}
+                    ''
+                  )}
               </div>
             </div>
           </div>
@@ -88,4 +106,9 @@ export class Post extends Component {
 let style = {
   height: 30
 }
-export default Post
+const mapStateToProps = state => ({
+  auth: state.auth,
+  // profile: state.auth
+  // post: state.posts
+})
+export default connect(mapStateToProps, { deletePost })(Post)

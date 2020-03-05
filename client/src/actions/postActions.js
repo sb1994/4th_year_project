@@ -10,6 +10,7 @@ import {
   DELETE_POST,
   CLEAR_INPUT_ERRORS,
   ADD_COMMENT,
+  DELETE_COMMENT,
   GET_COMMENTS,
   GET_COMMENT
 } from "./action_types";
@@ -19,13 +20,13 @@ export const addPost = postData => dispatch => {
   // dispatch(clearInputErrors());
   console.log(postData);
 
-  const { text, postImgURL } = postData;
+  const { text, postImgURL, feedId } = postData;
   // console.log(postData);
   console.log(postData);
   // const dispatch = dispatch;
 
   axios
-    .post("/api/posts/create", { text, postImgURL })
+    .post("/api/posts/create", { text, postImgURL, feedId })
     .then(
       res =>
         dispatch({
@@ -36,8 +37,9 @@ export const addPost = postData => dispatch => {
     )
     .then(() => {
       dispatch(setPostLoading());
+
       axios
-        .get("/api/posts/")
+        .get(`/api/posts/feed/${feedId}`)
         .then(res =>
           dispatch({
             type: GET_POSTS,
@@ -59,10 +61,12 @@ export const addPost = postData => dispatch => {
     );
 };
 // Get Posts
-export const getPosts = () => dispatch => {
-  dispatch(setPostLoading());
+export const getPosts = feedId => dispatch => {
+  // dispatch(setPostLoading());
+  console.log(feedId);
+
   axios
-    .get("/api/posts/")
+    .get(`/api/posts/feed/${feedId}`)
     .then(res =>
       dispatch({
         type: GET_POSTS,
@@ -77,9 +81,10 @@ export const getPosts = () => dispatch => {
     );
 };
 // Delete Post
-export const deletePost = id => dispatch => {
+export const deletePost = (id, post_id) => dispatch => {
+  console.log(id, post_id)
   axios
-    .delete(`/api/posts/${id}`)
+    .delete(`/api/posts/${id}/${post_id}`)
     .then(res =>
       dispatch({
         type: DELETE_POST,
@@ -92,6 +97,7 @@ export const deletePost = id => dispatch => {
         payload: err.response.data
       })
     );
+
 };
 // Clear post input errors
 export const clearInputErrors = () => {
@@ -116,6 +122,24 @@ export const addComment = commentData => dispatch => {
         type: ADD_COMMENT,
         payload: res.data
       });
+    })
+    .catch(err => {
+      console.log(err);
+    });
+};
+export const deleteComment = (id, post_id) => dispatch => {
+  // console.log(id, post_id);
+
+
+
+  axios
+    .post(`/api/posts/${post_id}/comment/${id}/`)
+    .then(res => {
+      console.log(res.data);
+      // dispatch({
+      //   type: DELETE_COMMENT,
+      //   payload: res.data
+      // });
     })
     .catch(err => {
       console.log(err);

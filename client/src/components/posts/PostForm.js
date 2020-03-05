@@ -28,11 +28,17 @@ export class PostForm extends Component {
   }
   onSubmit(e) {
     console.log("LOL");
+    let { searchedUser } = this.props.auth
+
+    console.log(searchedUser._id);
+
     if (this.state.post_pic === null && this.state.text !== "") {
       console.log("Will post text not image");
       const newPost = {
         text: this.state.text,
-        postImgUrl: ""
+        postImgUrl: "",
+        feedId: searchedUser._id
+
       };
       console.log(newPost);
       this.props.addPost(newPost);
@@ -43,7 +49,8 @@ export class PostForm extends Component {
       const newPost = {
         text: this.state.text,
         post_pic: this.state.post_pic,
-        postImgUrl: ""
+        postImgUrl: "",
+        feedId: searchedUser._id
       };
       // console.log(newPost.post_pic);
 
@@ -99,6 +106,9 @@ export class PostForm extends Component {
   }
 
   render() {
+    let { searchedUser } = this.props.auth
+    // console.log(searchedUser);
+
     const { postImgURL } = this.state;
     let postFormOutput;
 
@@ -154,7 +164,7 @@ export class PostForm extends Component {
 }
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
 });
 
 export default connect(mapStateToProps, { addPost })(PostForm);

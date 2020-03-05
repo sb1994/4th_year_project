@@ -29,28 +29,77 @@ router.post(
     const newPost = new Post({
       text: req.body.text,
       postImgURL: req.body.postImgURL,
-      user: req.user._id
+      user: req.user._id,
+      feedId: req.body.feedId
     });
-    console.log(newPost);
+    // console.log(newPost);
 
     newPost.save().then(post => res.json(post));
   }
 );
-// router.get("/:id", (req, res) => {
-//   Post.findById(req.params.id)
-//     .then(post => {
-//       if (post) {
-//         res.json(post);
-//       } else {
-//         res.status(404).json({ nopostfound: "No post found with that ID" });
-//       }
-//     })
-//     .catch(err =>
-//       res.status(404).json({ nopostfound: "No post found with that ID" })
-//     );
-// });
-router.get("/", (req, res) => {
-  Post.find()
+router.delete(
+  '/:id/:feed_id',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    let { id, feed_id } = req.params
+    let feedId = feed_id
+    let { user } = req
+    console.log(id, feed_id);
+
+
+
+    Post.findById(id)
+      .then(post => {
+        // Check for post owner
+        if (post.feedId.toString() !== user.id) {
+          return res
+            .status(401)
+            .json({ notauthorized: 'User not authorized' });
+        }
+
+        // Delete
+        post
+          .remove()
+          .then(() => res.json({ success: true }))
+          .catch(err => res.status(404).json({ postnotfound: 'No post found' }));
+      })
+  }
+);
+router.post(
+  '/:id/comment/:comment_id',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    let { id, comment_id } = req.params
+    // let feedId = feed_id
+    let { user } = req
+    console.log(id, comment_id);
+
+
+    Post.findOneAndUpdate(
+      { _id: id },
+      { $pull: { comments: comment_id } },
+    )
+      .then(post => {
+        Post.find({ feedId: post.feedId })
+          .populate("user")
+          .populate({ path: "comments", populate: [{ path: "user" }] })
+          .then(post => {
+            res.json(post);
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      })
+      .catch(err => {
+        console.log();
+      });
+  }
+);
+router.get("/feed/:feed_id", (req, res) => {
+  Post.find({ feedId: req.params.feed_id }).sort({ date: -1 })
+    .populate("user")
+    // .populate("comments")
+    .populate({ path: "comments", populate: [{ path: "user" }] })
     // .sort({ date: -1 })
     .then(posts => res.json(posts))
     .catch(err => res.status(404).json({ nopostsfound: "No posts found" }));
@@ -71,14 +120,14 @@ router.post(
     newComment
       .save()
       .then(comment => {
-        console.log(comment._id);
+        // console.log(comment._id);
         Post.findOneAndUpdate(
           { _id: comment.post },
           { $push: { comments: comment._id } },
           { new: true, upsert: true }
         )
           .then(post => {
-            Post.find({})
+            Post.find({ feedId: post.feedId })
               .populate("user")
               .populate({ path: "comments", populate: [{ path: "user" }] })
               .then(post => {

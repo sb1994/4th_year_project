@@ -8,7 +8,9 @@ import { getPosts } from "../../actions/postActions";
 
 class Posts extends Component {
   componentDidMount() {
-    this.props.getPosts();
+    console.log(this.props);
+
+    this.props.getPosts(this.props.feedId);
   }
 
   render() {
@@ -23,6 +25,7 @@ class Posts extends Component {
 
       // console.log(this.props);
     }
+    // console.log(this.props);
 
     return (
       <div className="feed">
@@ -41,7 +44,7 @@ class Posts extends Component {
 
 const mapStateToProps = state => ({
   posts: state.posts,
-  auth: state.auth
+  auth: state.auth,
 });
 
 export default connect(

@@ -129,7 +129,7 @@ export const getCurrentUser = () => {
       .then(result => {
         console.log(result)
 
-        dispatch(setLoggedUser(result.data.user))
+        // dispatch(setLoggedUser(result.data.user))
         // console.log(result.data);
       })
       .catch(err => {
@@ -145,7 +145,7 @@ export const getSearchedUser = id => {
       .then(result => {
         // dispatch(setLoggedUser(result.data.user))
         dispatch(setSearchedUser(result.data.user[0]))
-        console.log(result.data.user[0])
+        // console.log(result.data.user[0])
 
         // dispatch(setSearchedUser(result.data.user[0]))
       })
@@ -214,18 +214,10 @@ export const logoutUser = () => dispatch => {
   // // Set current user to {} which will set isAuthenticated to false
   // dispatch(setLoggedUser({}))
 
-  axios
-    .post('api/users/logout')
-    .then(result => {
-      console.log(result)
-      // Remove token from localStorage
-      localStorage.removeItem('token')
-      // Remove auth header for future requests
-      setUserToken(false)
-      // Set current user to {} which will set isAuthenticated to false
-      dispatch(setLoggedUser({}))
-    })
-    .catch(err => {
-      console.log(err)
-    })
+  // Remove token from localStorage
+  localStorage.removeItem('token')
+  // Remove auth header for future requests
+  setUserToken(false)
+  // Set current user to {} which will set isAuthenticated to false
+  dispatch(setLoggedUser({}))
 }

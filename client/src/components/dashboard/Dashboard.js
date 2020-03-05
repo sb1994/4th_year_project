@@ -1,10 +1,7 @@
 import React, { Component, Fragment } from 'react'
 // import HEREMap from "react-here-maps";
 import { connect } from 'react-redux'
-import PostForm from '../posts/PostForm'
-import ConnectedList from './ConnectedList'
 import Posts from '../posts/Posts'
-import { getPosts } from '../../actions/postActions'
 import ProfileCard from './ProfileCard'
 class Dashboard extends Component {
   constructor(props) {
@@ -17,8 +14,6 @@ class Dashboard extends Component {
   componentDidMount() {
     if (!this.props.auth.isAuthenticated) {
       this.props.history.push('/login')
-    } else {
-      // console.log(this.props.getPosts());
     }
   }
   componentWillReceiveProps(nextProps) {
@@ -45,15 +40,6 @@ class Dashboard extends Component {
         <h1>Dashboard</h1>
         <div className='row'>
           <ProfileCard user={user} />
-          <div className='col-md-6'>
-            <div className='row'>
-              <div className='col-md-12'>
-                {/* <PostForm /> */}
-                <Posts />
-              </div>
-            </div>
-          </div>
-          <div className='col-md-4'>{/* <ConnectedList /> */}</div>
         </div>
       </Fragment>
     )

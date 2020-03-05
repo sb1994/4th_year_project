@@ -66,7 +66,7 @@ module.exports = server
 let usersSock = []
 let connections = {}
 io.on('connection', socket => {
-  // console.log(socket.handshake.query)
+  console.log(socket.handshake.query)
   let { currentUser } = socket.handshake.query
 
   // console.log(currentUser, 'L:65')
@@ -106,6 +106,8 @@ io.on('connection', socket => {
     // console.log(connections)
     io.emit('currentUsers', { connections })
   })
+
+
 
   // socket.on("send message", data => {
   //   io.emit("newMessage", {

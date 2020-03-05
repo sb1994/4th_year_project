@@ -9,10 +9,10 @@ export class CommentList extends Component {
     console.log(this.props.comments);
   }
   render() {
-    let { comments } = this.props;
+    let { comments, feedId } = this.props;
 
     let commentContent = comments.map(comment => {
-      return <Comment key={comment._id} comment={comment} />;
+      return <Comment key={comment._id} comment={comment} feedId={feedId} />;
     });
     return (
       <div className="col-md-12">

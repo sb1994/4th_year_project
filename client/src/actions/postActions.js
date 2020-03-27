@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios'
 
 import {
   ADD_POST,
@@ -13,20 +13,20 @@ import {
   DELETE_COMMENT,
   GET_COMMENTS,
   GET_COMMENT
-} from "./action_types";
+} from './action_types'
 
 // Add Post
 export const addPost = postData => dispatch => {
   // dispatch(clearInputErrors());
-  console.log(postData);
+  console.log(postData)
 
-  const { text, postImgURL, feedId } = postData;
+  const { text, postImgURL, feedId } = postData
   // console.log(postData);
-  console.log(postData);
+  console.log(postData)
   // const dispatch = dispatch;
 
   axios
-    .post("/api/posts/create", { text, postImgURL, feedId })
+    .post('/api/posts/create', { text, postImgURL, feedId })
     .then(
       res =>
         dispatch({
@@ -36,7 +36,7 @@ export const addPost = postData => dispatch => {
       // console.log(res)
     )
     .then(() => {
-      dispatch(setPostLoading());
+      dispatch(setPostLoading())
 
       axios
         .get(`/api/posts/feed/${feedId}`)
@@ -51,19 +51,19 @@ export const addPost = postData => dispatch => {
             type: GET_POSTS,
             payload: null
           })
-        );
+        )
     })
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data
       })
-    );
-};
+    )
+}
 // Get Posts
 export const getPosts = feedId => dispatch => {
   // dispatch(setPostLoading());
-  console.log(feedId);
+  console.log(feedId)
 
   axios
     .get(`/api/posts/feed/${feedId}`)
@@ -78,8 +78,8 @@ export const getPosts = feedId => dispatch => {
         type: GET_POSTS,
         payload: null
       })
-    );
-};
+    )
+}
 // Delete Post
 export const deletePost = (id, post_id) => dispatch => {
   console.log(id, post_id)
@@ -96,52 +96,55 @@ export const deletePost = (id, post_id) => dispatch => {
         type: GET_ERRORS,
         payload: err.response.data
       })
-    );
-
-};
+    )
+}
 // Clear post input errors
 export const clearInputErrors = () => {
   return {
     type: CLEAR_INPUT_ERRORS
-  };
-};
+  }
+}
 // Set loading state
 export const setPostLoading = () => {
   return {
     type: POST_LOADING
-  };
-};
+  }
+}
 
 //post comment functions
 export const addComment = commentData => dispatch => {
+  let { text, post } = commentData
+
+  // console.log(post)
+
+  // console.log(commentData)
+
   axios
-    .post(`/api/posts/${commentData.post}/comment/create`, commentData)
+    .post(`/api/posts/${post}/comment`, { text })
     .then(res => {
-      // console.log(res.data);
+      // console.log(res.data)
       dispatch({
         type: ADD_COMMENT,
         payload: res.data
-      });
+      })
     })
     .catch(err => {
-      console.log(err);
-    });
-};
+      console.log(err)
+    })
+}
 export const deleteComment = (id, post_id) => dispatch => {
   // console.log(id, post_id);
 
-
-
   axios
-    .post(`/api/posts/${post_id}/comment/${id}/`)
+    .post(`/api/posts/${post_id}/comment/${id}/delete`)
     .then(res => {
-      console.log(res.data);
-      // dispatch({
-      //   type: DELETE_COMMENT,
-      //   payload: res.data
-      // });
+      console.log(res.data)
+      dispatch({
+        type: DELETE_COMMENT,
+        payload: res.data
+      })
     })
     .catch(err => {
-      console.log(err);
-    });
-};
+      console.log(err)
+    })
+}

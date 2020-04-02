@@ -13,7 +13,7 @@ router.get('/get', (req, res) => {
     // .populate("comments")
     // .populate({ path: 'comments', populate: [{ path: 'user' }] })
     // .sort({ date: -1 })
-    .then(chat => res.json({ chat: chat }))
+    .then(chat => res.json(chat))
     .catch(err => res.status(404).json({ nopostsfound: 'No posts found' }))
 })
 module.exports = router

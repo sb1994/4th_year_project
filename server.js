@@ -5,6 +5,7 @@ const dotenv = require('dotenv')
 const passport = require('passport')
 const http = require('http')
 const User = require('./api/v1/models/User')
+const Message = require('./api/v1/models/Message')
 
 // const keys = require("./config/key");
 const socketio = (module.exports.socketio = require('socket.io'))
@@ -29,6 +30,7 @@ mongoose
   .catch(err => console.log(err))
 const users = require('./api/v1/routes/users')
 const posts = require('./api/v1/routes/posts')
+const chatrouter = require('./api/v1/routes/chat')
 app.use(passport.initialize())
 require('./config/passport')(passport)
 //parse for the jsnon data that will be passed to the frontend clients
@@ -43,6 +45,7 @@ app.use((req, res, next) => {
 
 app.use('/api/users', users)
 app.use('/api/posts', posts)
+app.use('/api/chat', chatrouter)
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'))
@@ -65,57 +68,68 @@ module.exports = server
 
 let usersSock = []
 let connections = {}
+let chat = []
 io.on('connection', socket => {
-  console.log(socket.handshake.query)
-  let { currentUser } = socket.handshake.query
+  let { query } = socket.handshake
 
-  // console.log(currentUser, 'L:65')
+  if (query.currentUser === undefined) {
+    console.log(query.currentUser, socket.id)
+  } else {
+    User.findById(query.currentUser)
+      .select('-password')
+      .select('-friends')
+      .select('-pendingFriendsRequests')
+      .then(user => {
+        // socket.user = user
 
-  User.findById(currentUser)
-    .select('-password')
-    .select('-friends')
-    .select('-pendingFriendsRequests')
-    .then(user => {
-      socket.user = user
+        // console.log(socket)
 
-      // console.log(socket)
+        connections[user._id] = user
+        connections[user._id].socket = socket.id
 
-      connections[socket.id] = user
+        // console.log(connections.lengt)
 
-      // console.log(connections.lengt)
-      // console.log(connections)
-      // console.log(socket.id)
-      io.emit('newUserConnected', { connections })
+        // console.log(socket.id)
+        io.emit('newUserConnected', { connections })
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+  socket.on('add message', data => {
+    console.log(data)
+
+    let messages = []
+    let newMessage = new Message({
+      user: data.sender,
+      text: data.text
     })
-    .catch(err => {
-      console.log(err)
+
+    newMessage.save().then(message => {
+      Message.find({})
+        .populate('user')
+        .then(message => {
+          chat.push(message)
+
+          io.emit('added message', { chat })
+        })
+        .catch(err => {
+          console.log(err)
+        })
     })
 
-  // connections.push(socket);
+    // console.log(newMessage)
+  })
 
-  // console.log(`Sockets connected: ${connections.length}`)
-
-  // //connects disconnection
   socket.on('disconnect', data => {
     // connections.splice(connections.indexOf(socket), 1)
     console.log(`Socket Disconnected: ${socket.id} `)
 
-    delete connections[socket.id]
+    let { query } = socket.handshake
+    delete connections[query.currentUser]
     // connections = connections.filter(socket => connections.includes(socket.id))
     // connections = Object.keys(connections).filter(key => key !== socket.id)
     // console.log(connections)
-    io.emit('currentUsers', { connections })
+    io.emit('disconnected', { connections })
   })
-
-
-
-  // socket.on("send message", data => {
-  //   io.emit("newMessage", {
-  //     msg: data.text,
-  //     id: data.id
-  //   });
-  //   console.log(data);
-  // });
-
-  console.log('User has logged in and connected to socket')
 })

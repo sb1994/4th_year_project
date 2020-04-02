@@ -15,13 +15,16 @@ export class ConnectedList extends Component {
     // this.socket = io('http://localhost:5000', {
     //   query: { currentUser: this.props.auth.user.id }
     // })
-    // this.socket = io('http://localhost:5000', {
-    //   query: { currentUser: this.props.auth.user.id }
-    // })
-
-    this.socket = io(process.env.REACT_APP_SOCKET, {
+    this.socket = io('http://localhost:5000', {
       query: { currentUser: this.props.auth.user.id }
     })
+
+    // this.socket = io(process.env.REACT_APP_SOCKET, {
+    //   query: { currentUser: this.props.auth.user.id }
+    // })
+    // this.socket = io(process.env.REACT_APP_SOCKET, {
+    //   query: { currentUser: this.props.auth.user.id }
+    // })
     this.getCurrentUsers = this.getCurrentUsers.bind(this)
     this.getState = this.getState.bind(this)
 

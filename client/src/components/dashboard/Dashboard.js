@@ -3,6 +3,7 @@ import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import Posts from '../posts/Posts'
 import ProfileCard from './ProfileCard'
+import { getCurrentUser } from '../../actions/userAuthActions'
 class Dashboard extends Component {
   constructor(props) {
     super(props)
@@ -14,6 +15,8 @@ class Dashboard extends Component {
   componentDidMount() {
     if (!this.props.auth.isAuthenticated) {
       this.props.history.push('/login')
+    } else {
+      // this.props.getCurrentUser()
     }
   }
   componentWillReceiveProps(nextProps) {
@@ -29,12 +32,7 @@ class Dashboard extends Component {
     // console.log(this.props);
     const { user } = this.props.auth
     const { profile } = this.props
-    // console.log(user)
-
-    const center = {
-      lat: 51.5,
-      lng: 0
-    }
+    console.log(user)
     return (
       <Fragment>
         <h1>Dashboard</h1>
@@ -56,7 +54,4 @@ const mapStateToProps = state => ({
   // post: state.posts
 })
 
-export default connect(
-  mapStateToProps
-  // { getPosts }
-)(Dashboard)
+export default connect(mapStateToProps, { getCurrentUser })(Dashboard)

@@ -24,7 +24,7 @@ export class UsersCard extends Component {
   }
 
   handleFriendRequest() {
-    this.props.addFriend(this.props.user._id)
+    this.props.addFriend(this.props.auth.user._id)
   }
   render() {
     let { user, auth } = this.props
@@ -32,7 +32,7 @@ export class UsersCard extends Component {
     // console.log(user);
 
     return (
-      <MDBCol size='3'>
+      <MDBCol size='12' sm='12' lg='8' xs='12'>
         <MDBCard>
           <MDBCardImage
             style={{ width: '80px' }}

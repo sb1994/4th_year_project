@@ -16,19 +16,19 @@ export class ProfileCard extends Component {
     let { user, auth } = this.props
 
     const currentUserInputs = (
-      <NavLink to={`profile/edit/${user.id}`}>Edit Profile</NavLink>
+      <NavLink to={`profile/edit/${auth.user._id}`}>Edit Profile</NavLink>
     )
     return (
       <Fragment>
         <div className='col-md-2 card' style={style.profile}>
           <div className='card-body'>
-            <h2 className='card-title'>{user.name}</h2>
+            <h2 className='card-title'>{auth.user.name}</h2>
             <img
-              src={user.profile_pic}
+              src={auth.user.profile_pic}
               alt='Profile Pic'
               className='img-fluid'
             />
-            {user.id === auth.user.id ? currentUserInputs : ''}
+            {/* {user._id === auth.user._id ? currentUserInputs : ''} */}
           </div>
         </div>
       </Fragment>

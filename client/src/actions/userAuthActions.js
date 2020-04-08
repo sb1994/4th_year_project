@@ -129,7 +129,7 @@ export const getCurrentUser = () => {
       .then(result => {
         console.log(result)
 
-        // dispatch(setLoggedUser(result.data.user))
+        dispatch(setLoggedUser(result.data.user))
         // console.log(result.data);
       })
       .catch(err => {
@@ -144,7 +144,7 @@ export const getSearchedUser = id => {
       // .get(`https://jsonplaceholder.typicode.com/todos/1`)
       .then(result => {
         // dispatch(setLoggedUser(result.data.user))
-        dispatch(setSearchedUser(result.data.user[0]))
+        dispatch(setSearchedUser(result.data.user))
         // console.log(result.data.user[0])
 
         // dispatch(setSearchedUser(result.data.user[0]))

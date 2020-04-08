@@ -8,10 +8,8 @@ class EditProfile extends Component {
   }
   constructor(props) {
     super(props)
-
-    let { user } = this.props.auth
     this.state = {
-      company: '',
+      // company: '',
       website: '',
       location: '',
       status: '',
@@ -23,7 +21,34 @@ class EditProfile extends Component {
     }
     this.handleFileChange = this.handleFileChange.bind(this)
     this.onChange = this.onChange.bind(this)
-    this.onSubmit = this.onSubmit.bind(this)
+    // this.onSubmit = this.onSubmit.bind(this)
+  }
+  componentWillMount() {
+    this.props.getCurrentUser()
+    // console.log(bio)
+  }
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps.auth.user)
+    let {
+      bio,
+      website,
+      location,
+      status,
+      skills,
+      githubusername,
+      profile_pic
+    } = nextProps.auth.user
+
+    this.setState({
+      bio,
+      website,
+      location,
+      status,
+      skills,
+      githubusername,
+      profile_pic,
+      current_profile_pic: profile_pic
+    })
   }
   handleFileChange(e) {
     if (e.target.files[0]) {
@@ -36,66 +61,59 @@ class EditProfile extends Component {
   }
   onSubmit(e) {
     e.preventDefault()
-    console.log('LOL')
-    if (this.state.post_pic === null && this.state.text !== '') {
-      console.log('Will post text not image')
-      const newPost = {
-        text: this.state.text,
-        postImgUrl: ''
-      }
-      console.log(newPost)
-      this.props.addPost(newPost)
-      this.setState({
-        text: ''
-      })
+    if (this.state.profile_pic === this.state.current_profile_pic) {
+      console.log('Will keep the same profile image')
+      // const newPost = {
+      //   text: this.state.text,
+      //   postImgUrl: ''
+      // }
+      // console.log(newPost)
+      // this.props.addPost(newPost)
     } else {
-      const newPost = {
-        text: this.state.text,
-        post_pic: this.state.post_pic,
-        postImgUrl: ''
-      }
-      console.log(newPost.post_pic)
-
-      const uploadTask = storage
-        .ref(`post_imgs/${newPost.post_pic.name}`)
-        .put(newPost.post_pic)
-      uploadTask.on(
-        'state_changed',
-        snapshot => {
-          console.log(snapshot)
-        },
-        error => {
-          console.log(error)
-        },
-        () => {
-          console.log('IMAGE UPLOADED')
-          //what happens whent the postIm has finished uploading
-          storage
-            .ref('post_imgs')
-            .child(newPost.post_pic.name)
-            .getDownloadURL()
-            .then(url => {
-              let postImgURL = url
-              // console.log(postImgUrl);
-
-              // console.log(postImgUrl);
-              newPost.postImgURL = postImgURL
-              // console.log(newPost);
-              this.props.addPost(newPost)
-              console.log(this.state)
-
-              this.setState({
-                text: '',
-                post_pic: null,
-                profileImgUrl: '',
-                profileImgURL: ''
-              })
-            })
-            .catch(err => {
-              console.log(err)
-            })
-        }
-      )
+      // const newPost = {
+      //   text: this.state.text,
+      //   post_pic: this.state.post_pic,
+      //   postImgUrl: ''
+      // }
+      // console.log(newPost.post_pic)
+      // const uploadTask = storage
+      //   .ref(`post_imgs/${newPost.post_pic.name}`)
+      //   .put(newPost.post_pic)
+      // uploadTask.on(
+      //   'state_changed',
+      //   snapshot => {
+      //     console.log(snapshot)
+      //   },
+      //   error => {
+      //     console.log(error)
+      //   },
+      //   () => {
+      //     console.log('IMAGE UPLOADED')
+      //     //what happens whent the postIm has finished uploading
+      //     storage
+      //       .ref('post_imgs')
+      //       .child(newPost.post_pic.name)
+      //       .getDownloadURL()
+      //       .then(url => {
+      //         let postImgURL = url
+      //         // console.log(postImgUrl);
+      //         // console.log(postImgUrl);
+      //         newPost.postImgURL = postImgURL
+      //         // console.log(newPost);
+      //         this.props.addPost(newPost)
+      //         console.log(this.state)
+      //         this.setState({
+      //           text: '',
+      //           post_pic: null,
+      //           profileImgUrl: '',
+      //           profileImgURL: ''
+      //         })
+      //       })
+      //       .catch(err => {
+      //         console.log(err)
+      //       })
+      //   }
+      // )
     }
   }
   onChange(e) {
@@ -108,31 +126,25 @@ class EditProfile extends Component {
       this.props.match.params.id !== this.props.auth.user.id
     ) {
       this.props.history.push('/dashboard')
+    } else {
+      console.log(this.props.auth.user)
     }
   }
   render() {
     const { profileImgURL } = this.state
     let { user } = this.props.auth
+    console.log(this.state)
 
     return (
-      <div>
-        <h1>Edit Profile Page</h1>
+      <div className='container'>
         <form onSubmit={this.onSubmit}>
-          <div className='form-group'>
-            <span>Commpany</span>
-            <input
-              type='text'
-              onChange={this.onChange}
-              value={user.company}
-              name='company'
-            />
-          </div>
           <div className='form-group'>
             <span>Website</span>
             <input
               type='text'
               onChange={this.onChange}
-              value={user.website}
+              value={this.state.website}
+              defaultValue={user.website}
               name='website'
             />
           </div>
@@ -141,22 +153,32 @@ class EditProfile extends Component {
             <input
               type='text'
               onChange={this.onChange}
-              value={user.location}
+              value={this.state.location}
               name='location'
             />
           </div>
           <div className='form-group'>
             <span>Status</span>
-            <input type='text' onChange={this.onChange} value={user.status} />
-          </div>
-          <div className='form-group'>
-            <input type='text' onChange={this.onChange} value={user.bio} />
-          </div>
-          <div className='form-group'>
             <input
               type='text'
               onChange={this.onChange}
-              value={user.githubusername}
+              value={this.state.status}
+            />
+          </div>
+          <div className='form-group'>
+            <span>Bio:</span>
+            <input
+              type='text'
+              onChange={this.onChange}
+              value={this.state.bio}
+            />
+          </div>
+          <div className='form-group'>
+            <span>Git Username</span>
+            <input
+              type='text'
+              onChange={this.onChange}
+              value={this.state.githubusername}
             />
           </div>
           <div className='form-group'>
@@ -169,8 +191,8 @@ class EditProfile extends Component {
               type='file'
               onChange={this.handleFileChange}
               value={this.state.profile_pic}
-              name='avatar'
-              id='avatar'
+              name='profile_pic'
+              id='profile_pic'
             />
           </div>
           <button type='submit'>Update profile</button>

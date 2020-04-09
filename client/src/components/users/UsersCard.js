@@ -32,7 +32,7 @@ export class UsersCard extends Component {
     // console.log(user);
 
     return (
-      <MDBCol size='12' sm='12' lg='8' xs='12'>
+      <MDBCol className='col-md-4 col-sm-12'>
         <MDBCard>
           <MDBCardImage
             style={{ width: '80px' }}

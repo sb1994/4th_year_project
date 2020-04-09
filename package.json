@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/sb1994/4th_year_project#readme",
   "dependencies": {
+    "@fortawesome/free-regular-svg-icons": "^5.13.0",
     "axios": "^0.19.1",
     "axois": "0.0.1-security",
     "bcryptjs": "^2.4.3",

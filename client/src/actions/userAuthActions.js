@@ -144,7 +144,7 @@ export const getSearchedUser = id => {
       // .get(`https://jsonplaceholder.typicode.com/todos/1`)
       .then(result => {
         // dispatch(setLoggedUser(result.data.user))
-        dispatch(setSearchedUser(result.data.user))
+        dispatch(setSearchedUser(result.data.user[0]))
         // console.log(result.data.user[0])
 
         // dispatch(setSearchedUser(result.data.user[0]))
@@ -204,6 +204,55 @@ export const registerAuth = (password, name, email) => {
         console.log(err)
       })
   }
+}
+export const updateUser = updatedUser => dispatch => {
+  console.log(updatedUser)
+  dispatch(startAuth())
+
+  let {
+    bio,
+    website,
+    location,
+    status,
+    githubusername,
+    profile_pic
+  } = updatedUser
+
+  axios
+    .post('http://localhost:5000/api/users/update', {
+      // hello: 'this is my code'
+      bio,
+      website,
+      location,
+      status,
+      githubusername,
+      profile_pic
+    })
+    .then(result => {
+      dispatch(setLoggedUser(result.data.user))
+    })
+    .catch(err => {
+      console.log(err)
+    })
+
+  // return dispatch => {
+  //   dispatch(startAuth())
+  //   // console.log(avatar);
+
+  //   axios
+  //     .post('api/users/register/', {
+  //       password,
+  //       name,
+  //       email
+  //     })
+  //     .then(result => {
+  //       console.log(result)
+  //     })
+  //     .catch(err => {
+  //       console.log(err)
+  //     })
+  // }
+  //alert that the register has started
 }
 export const logoutUser = () => dispatch => {
   // console.log(result)

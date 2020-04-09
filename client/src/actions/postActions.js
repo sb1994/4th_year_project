@@ -22,7 +22,7 @@ export const addPost = postData => dispatch => {
 
   const { text, postImgURL, feedId } = postData
   // console.log(postData);
-  console.log(postData)
+  // console.log(postData)
   // const dispatch = dispatch;
 
   axios
@@ -66,12 +66,14 @@ export const getPosts = feedId => dispatch => {
   console.log(feedId)
 
   axios
-    .get(`/api/posts/feed/${feedId}`)
-    .then(res =>
-      dispatch({
-        type: GET_POSTS,
-        payload: res.data
-      })
+    .get(`http://localhost:5000/api/posts/feed/${feedId}`)
+    .then(
+      res =>
+        dispatch({
+          type: GET_POSTS,
+          payload: res.data
+        })
+      // console.log(res)
     )
     .catch(err =>
       dispatch({

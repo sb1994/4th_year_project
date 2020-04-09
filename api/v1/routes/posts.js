@@ -89,6 +89,7 @@ router.post(
         )
           .then(post => {
             Post.find({ feedId: post.feedId })
+              .sort({ created: -1 })
               .populate('user')
               .populate({ path: 'comments', populate: [{ path: 'user' }] })
               .then(post => {
@@ -148,7 +149,7 @@ router.post(
 
 router.get('/feed/:feed_id', (req, res) => {
   Post.find({ feedId: req.params.feed_id })
-    .sort({ date: -1 })
+    .sort({ created: -1 })
     .populate('user')
     // .populate("comments")
     .populate({ path: 'comments', populate: [{ path: 'user' }] })

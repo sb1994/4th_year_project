@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import Moment from 'react-moment'
-import { connect } from "react-redux";
+import { connect } from 'react-redux'
 //user reder actions
-import { deletePost } from "../../actions/postActions";
+import { deletePost } from '../../actions/postActions'
 import CommentList from './CommentList'
 import CommentForm from './CommentForm'
 export class Post extends Component {
@@ -31,7 +31,6 @@ export class Post extends Component {
   deletePost() {
     let { post, auth } = this.props
     this.props.deletePost(post._id, post.feedId)
-
   }
   render() {
     const { showComments } = this.state
@@ -54,10 +53,11 @@ export class Post extends Component {
                 <Moment className='text-right' format='YYYY/MM/DD'>
                   {post.created}
                 </Moment>
-                {
-
-                  user.id === post.feedId ? <button className="btn btn-danger" onClick={this.deletePost}>X</button> : ''
-                }
+                {user._id === post.feedId ? (
+                  <button className='btn btn-danger' onClick={this.deletePost}>
+                    X
+                  </button>
+                ) : null}
               </div>
             </div>
           </div>
@@ -65,15 +65,15 @@ export class Post extends Component {
             <div className='row'>
               <div className='col-md-12'>{post.text}</div>
               <div className='col-md-12'>
-                {post.postImgURL === undefined ? (
-                  ''
+                {post.postImgURL !== undefined ? (
+                  <img
+                    className='img-fluid'
+                    src={post.postImgURL}
+                    alt='Post Image'
+                  />
                 ) : (
-                    <img
-                      className='img-fluid'
-                      src={post.postImgURL}
-                      alt='Post Image'
-                    />
-                  )}
+                  ''
+                )}
               </div>
               <hr />
               <div className='col-md-12'>
@@ -85,15 +85,20 @@ export class Post extends Component {
                 <hr />
                 {showComments ? (
                   <div className='row'>
-                    {
-                      isAuthenticated ? (<CommentForm post_id={post._id} />) : (<p>Please Login</p>)
-
-                    }
-                    <CommentList post={post} comments={post.comments} feedId={post.feedId} />
+                    {isAuthenticated ? (
+                      <CommentForm post_id={post._id} />
+                    ) : (
+                      <p>Please Login</p>
+                    )}
+                    <CommentList
+                      post={post}
+                      comments={post.comments}
+                      feedId={post.feedId}
+                    />
                   </div>
                 ) : (
-                    ''
-                  )}
+                  ''
+                )}
               </div>
             </div>
           </div>
@@ -107,7 +112,7 @@ let style = {
   height: 30
 }
 const mapStateToProps = state => ({
-  auth: state.auth,
+  auth: state.auth
   // profile: state.auth
   // post: state.posts
 })

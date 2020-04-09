@@ -30,7 +30,7 @@ router.get('/', (req, res) => {
     .then(users => {
       res.json({ users: users })
     })
-    .catch(err => { })
+    .catch(err => {})
 })
 router.get('/:id', (req, res) => {
   User.find({ _id: req.params.id })
@@ -38,7 +38,7 @@ router.get('/:id', (req, res) => {
     .then(user => {
       res.json({ user: user })
     })
-    .catch(err => { })
+    .catch(err => {})
 })
 
 router.post('/register', (req, res) => {
@@ -356,6 +356,89 @@ router.post(
           //   .catch(err => {
           //     console.log(err);
           //   });
+        }
+        // process.exit(0);
+      }
+    )
+  }
+)
+router.post(
+  '/update',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    // console.log(req.params.user_id);
+    //id of the person accepting the friend request
+    let { _id } = req.user
+
+    console.log(`Reciver Id : ${_id}`)
+
+    let {
+      bio,
+      website,
+      location,
+      status,
+      skills,
+      githubusername,
+      profile_pic
+    } = req.body
+
+    // console.log(bio)
+
+    // let requesterID = req.params.user_id
+
+    // console.log(`Requester Id: ${requesterID}`)
+
+    //current users pending/friends end then update the friend who requested
+    User.findOneAndUpdate(
+      {
+        _id: _id
+      },
+      {
+        $set: {
+          bio: bio,
+          website: website,
+          location: location,
+          status: status,
+          githubusername: githubusername,
+          profile_pic: profile_pic
+        }
+      },
+      //   $addToSet: {
+      //     friends: { user: requesterID }
+      //   }
+      // },
+      // { $pull: { pendingFriendsRequests: { user: requesterID } } },
+
+      (err, result) => {
+        if (err) {
+          console.log('Error:', err)
+        } else {
+          // console.log('Im Herre')
+
+          // console.log(result)
+
+          // res.send(result)
+
+          User.findById(_id)
+            .select('-password')
+            // .populate("pendingFriendsRequests.user")
+            .then(result => {
+              res.send({ user: result })
+            })
+            .catch(err => {
+              console.log(err)
+            })
+          User.find({})
+            .select('-password')
+            .populate('friends.user')
+            .populate('pendingFriendsRequests.user')
+            .then(result => {
+              res.send({ users: result })
+              console.log(result.data)
+            })
+            .catch(err => {
+              console.log(err)
+            })
         }
         // process.exit(0);
       }

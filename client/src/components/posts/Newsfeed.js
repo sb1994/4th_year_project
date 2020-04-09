@@ -13,19 +13,21 @@ export class Newsfeed extends Component {
 
   render() {
     let { posts } = this.props.posts
+    if (posts === undefined) {
+      return (
+        <div>
+          <p>Please enter a comment</p>
+        </div>
+      )
+    } else {
+      let newsFeedContent = posts.map(post => {
+        return <Post key={post._id} post={post} />
+      })
+      return <div>{newsFeedContent}</div>
+    }
     // console.log(posts);
 
-    let newsFeedContent = posts.map(post => {
-      return <Post key={post._id} post={post} />
-    })
     // console.log(this.props);
-
-    return (
-      <div>
-        <h2>NewsFeed</h2>
-        {newsFeedContent}
-      </div>
-    )
   }
 }
 

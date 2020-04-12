@@ -5,69 +5,34 @@ export class ConnectedListUser extends Component {
   constructor(props) {
     super(props)
 
-    this.state = {
-
-    }
-    this.socket = this.props.socket
-    this.startPrivateChat = this.startPrivateChat.bind(this)
-
-    this.getCurrentUsers = this.getCurrentUsers.bind(this)
-  }
-  getCurrentUsers(socket) {
-    socket.on('currentUsers', data => {
-      console.log(data);
-
-      // this.setState({ loggedUsers: data.connections })
-      // console.log(data)
-    })
-
-    // console.log(this.state)
-
-    // so
-  }
-  startPrivateChat() {
-
-
-
-
-    console.log(this.socket);
-
-
+    this.state = {}
   }
 
   render() {
     let { user } = this.props
-    // console.log(this.props);
+    // console.log(this.props.user)
 
     return (
-      <li
-
-        className='list-group-item'
-        onClick={this.joinPrivateChat}
-      >
-        <div>
-          {user.name}
-          <img
-            style={{ height: '50px' }}
-            src={user.profile_pic}
-            alt=''
-            className='img-fluid img-thumbnail'
-          />
-          {/* <img src={user.profile_pic} alt='' srcset='' /> */}
-          <button className="btn btn-primary" onClick={this.startPrivateChat}>chat</button>
+      <div className='col-md-2 col-sm-2 col-xs-6 card' style={styles.cardStyle}>
+        <div className='card-body'>
+          <img className='img-fluid' src={user.profile_pic} alt='' srcset='' />
+          <p>{user.name}</p>
         </div>
-      </li>
+      </div>
     )
   }
 }
 
-const mapStateToProps = (state) => ({
-
+const mapStateToProps = state => ({
   auth: state.auth
 })
 
-const mapDispatchToProps = {
+const mapDispatchToProps = {}
 
+const styles = {
+  cardStyle: {
+    margin: 10
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ConnectedListUser)

@@ -104,14 +104,19 @@ io.on('connection', socket => {
       user: data.sender,
       text: data.text
     })
+    // console.log(newMessage)
 
     newMessage.save().then(message => {
-      Message.find({})
+      Message.findById(message._id)
         .populate('user')
         .then(message => {
-          chat.push(message)
+          // chat.push(message)
 
-          io.emit('added message', { chat })
+          // log
+          // console.log(chat)
+          io.emit('added message', message)
+
+          console.log(message)
         })
         .catch(err => {
           console.log(err)

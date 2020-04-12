@@ -1,0 +1,11 @@
+.msgAuth {
+  background-color: aqua;
+  margin: 10;
+  padding: 10px;
+  border-radius: 40px;
+}
+.msgChat {
+  background-color: red;
+  padding: 10px;
+  border-radius: 40px;
+}

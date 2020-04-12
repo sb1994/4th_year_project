@@ -8,7 +8,8 @@ const initialState = {
   currentChatId: '',
   post: {},
   loading: false,
-  postAdded: false
+  postAdded: false,
+  chat: []
 }
 
 const post = (state = initialState, action) => {
@@ -18,7 +19,11 @@ const post = (state = initialState, action) => {
         ...state,
         currentChatId: action.id
       }
-
+    case GET_CHAT_POSTS:
+      return {
+        ...state,
+        chat: action.payload
+      }
     default:
       return state
   }

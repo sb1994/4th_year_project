@@ -19,7 +19,6 @@ export class Profile extends Component {
     // console.log(user)
 
     let { id } = this.props.match.params
-    console.log(id)
 
     if (!searchedUser) {
       return <div>Loading....</div>

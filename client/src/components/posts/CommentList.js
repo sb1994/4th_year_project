@@ -14,12 +14,7 @@ export class CommentList extends Component {
     let commentContent = comments.map(comment => {
       return <Comment key={comment._id} comment={comment} feedId={feedId} />
     })
-    return (
-      <div className='col-md-12'>
-        <h2>CommentList</h2>
-        {commentContent}
-      </div>
-    )
+    return <div className='col-md-12'>{commentContent}</div>
   }
 }
 

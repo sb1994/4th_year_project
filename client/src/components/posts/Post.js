@@ -77,9 +77,20 @@ export class Post extends Component {
               </div>
               <hr />
               <div className='col-md-12'>
-                <button className='btn btn-primary' onClick={this.showComments}>
-                  {showComments ? 'Hide Comments' : 'Show Comments'}
-                </button>
+                <div className='row'>
+                  <div className='col-md-6'>
+                    <button
+                      className='btn btn-primary'
+                      onClick={this.showComments}
+                    >
+                      {showComments ? 'Hide Comments' : 'Show Comments'}
+                    </button>
+                  </div>
+                  <div className='col-md-6'>
+                    <button className='btn btn-warning'>Like</button>
+                    <span>({post.likes.length})</span>
+                  </div>
+                </div>
               </div>
               <div className='col-md-12'>
                 <hr />

@@ -33,11 +33,13 @@ const posts = require('./api/v1/routes/posts')
 const chatrouter = require('./api/v1/routes/chat')
 app.use(passport.initialize())
 require('./config/passport')(passport)
+
 //parse for the jsnon data that will be passed to the frontend clients
 app.use(bodyParser.urlencoded({ extended: false }))
-
 app.use(bodyParser.json())
+
 app.use(cors())
+
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*')
   next()

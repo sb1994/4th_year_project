@@ -36,6 +36,13 @@ export class Post extends Component {
     const { showComments } = this.state
     let { user, isAuthenticated } = this.props.auth
     let { post } = this.props
+
+    let { likes } = post
+    // let likeButtonStatus = likes.some(like => like.user === user._id)
+    let likeButtonStatus = likes.some(like => like.user === user._id)
+
+    console.log(likeButtonStatus)
+
     return (
       <div className='post-form mb-3'>
         <div className='card card-info'>
@@ -85,10 +92,6 @@ export class Post extends Component {
                     >
                       {showComments ? 'Hide Comments' : 'Show Comments'}
                     </button>
-                  </div>
-                  <div className='col-md-6'>
-                    <button className='btn btn-warning'>Like</button>
-                    <span>({post.likes.length})</span>
                   </div>
                 </div>
               </div>

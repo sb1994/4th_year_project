@@ -267,26 +267,6 @@ router.post(
               }
             }
           )
-          // User.findById(friendId)
-          //   .select("-password")
-          //   .populate("pendingFriendsRequests.user")
-          //   .then(result => {
-          //     res.send({ user: result });
-          //   })
-          //   .catch(err => {
-          //     console.log(err);
-          //   });
-          // User.find({})
-          //   .select("-password")
-          //   .populate("friends.user")
-          //   .populate("pendingFriendsRequests.user")
-          //   .then(result => {
-          //     res.send({ users: result });
-          //     console.log(result.data);
-          //   })
-          //   .catch(err => {
-          //     console.log(err);
-          //   });
         }
         // process.exit(0);
       }

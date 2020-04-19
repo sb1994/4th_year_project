@@ -98,18 +98,6 @@ router.post(
               .catch(err => {
                 console.log(err)
               })
-              // Post.find({})
-              //   .sort({ date: -1 })
-              .populate('user')
-            //   // .populate("comments")
-            //   .populate({ path: "comments", populate: [{ path: "user" }] })
-            //   // .populate({
-            //   //   path: "comments"
-            //   // })
-            //   .then(posts => res.json(posts))
-            //   .catch(err =>
-            //     res.status(404).json({ nopostsfound: "No posts found" })
-            //   );
           })
           .catch(err => {
             console.log()

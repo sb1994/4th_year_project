@@ -219,7 +219,7 @@ export const updateUser = updatedUser => dispatch => {
   } = updatedUser
 
   axios
-    .post('http://localhost:5000/api/users/update', {
+    .post('/api/users/update', {
       // hello: 'this is my code'
       bio,
       website,

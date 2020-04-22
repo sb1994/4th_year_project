@@ -10,7 +10,7 @@ import { setLoggedUser, logoutUser } from './actions/userAuthActions'
 
 import Login from './components/auth/Login'
 import Register from './components/auth/Register'
-import NavBar from './components/Navbar'
+import Navigation from './components/Navigation'
 import Friends from './components/friends/Friends'
 import Chat from './components/chat/Chat'
 import Profile from './components/dashboard/Profile'
@@ -44,7 +44,7 @@ class App extends Component {
       <Provider store={store}>
         <BrowserRouter>
           <Fragment>
-            <NavBar />
+            <Navigation />
             <Switch>
               <Route exact path='/register' component={Register} />
               <Route exact path='/' component={Login} />

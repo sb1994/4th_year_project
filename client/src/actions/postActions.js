@@ -66,7 +66,7 @@ export const getPosts = feedId => dispatch => {
   console.log(feedId)
 
   axios
-    .get(`http://localhost:5000/api/posts/feed/${feedId}`)
+    .get(`/api/posts/feed/${feedId}`)
     .then(
       res =>
         dispatch({

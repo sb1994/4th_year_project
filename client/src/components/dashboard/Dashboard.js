@@ -17,7 +17,7 @@ class Dashboard extends Component {
   }
   componentDidMount() {
     if (!this.props.auth.isAuthenticated) {
-      this.props.history.push('/login')
+      this.props.history.push('/')
     } else {
       this.props.getCurrentUser()
       // this.props.getPosts(this.props.auth.user._id)
@@ -25,7 +25,7 @@ class Dashboard extends Component {
   }
   componentWillReceiveProps(nextProps) {
     if (!nextProps.auth.isAuthenticated) {
-      this.props.history.push('/login')
+      this.props.history.push('/')
     } else {
     }
 

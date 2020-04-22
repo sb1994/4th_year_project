@@ -116,16 +116,19 @@ export class Chat extends Component {
           <ChatFeed chat={chatMessages} />
         )}
         <div className='col-md-12'>
-          <input
-            type='text'
-            placeholder='Enter comment'
-            onChange={this.handleMsgInput}
-            value={this.state.text}
-            name='text'
-          />
-          <button className='btn btn-primary' onClick={this.handleMsgSubmit}>
-            Add Message
-          </button>
+          <div className='form-group'>
+            <input
+              type='text'
+              placeholder='Enter comment'
+              onChange={this.handleMsgInput}
+              value={this.state.text}
+              name='text'
+              className='form-control'
+            />
+            <button className='btn btn-primary' onClick={this.handleMsgSubmit}>
+              Add Message
+            </button>
+          </div>
         </div>
       </div>
     )

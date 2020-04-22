@@ -166,6 +166,7 @@ class EditProfile extends Component {
             <span>Website</span>
             <input
               type='text'
+              className='form-control'
               onChange={this.onChange}
               value={this.state.website}
               defaultValue={user.website}
@@ -176,6 +177,7 @@ class EditProfile extends Component {
             <span>Location</span>
             <input
               type='text'
+              className='form-control'
               onChange={this.onChange}
               value={this.state.location}
               name='location'
@@ -185,6 +187,7 @@ class EditProfile extends Component {
             <span>Status</span>
             <input
               type='text'
+              className='form-control'
               onChange={this.onChange}
               value={this.state.status}
               name='status'
@@ -194,6 +197,7 @@ class EditProfile extends Component {
             <span>Bio:</span>
             <input
               type='text'
+              className='form-control'
               onChange={this.onChange}
               value={this.state.bio}
               name='bio'
@@ -203,6 +207,7 @@ class EditProfile extends Component {
             <span>Git Username</span>
             <input
               type='text'
+              className='form-control'
               onChange={this.onChange}
               value={this.state.githubusername}
               name='githubusername'

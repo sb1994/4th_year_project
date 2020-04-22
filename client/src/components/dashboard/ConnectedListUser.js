@@ -13,7 +13,7 @@ export class ConnectedListUser extends Component {
     // console.log(this.props.user)
 
     return (
-      <div className='col-md-2 col-sm-2 col-xs-6 card' style={styles.cardStyle}>
+      <div className='col-md-2 col-sm-3 col-xs-6 card' style={styles.cardStyle}>
         <div className='card-body'>
           <img className='img-fluid' src={user.profile_pic} alt='' srcset='' />
           <p>{user.name}</p>

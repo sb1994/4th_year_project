@@ -21,6 +21,7 @@ class Dashboard extends Component {
     } else {
       this.props.getCurrentUser()
       // this.props.getPosts(this.props.auth.user._id)
+      console.log(this.props)
     }
   }
   componentWillReceiveProps(nextProps) {
@@ -53,7 +54,7 @@ class Dashboard extends Component {
         <div className='container'>
           <div className='row'>
             <ProfileCard user={user} history={history} />
-            <Posts feedId={this.state.feedId} />
+            <Posts feedId={user._id} />
           </div>
         </div>
       )

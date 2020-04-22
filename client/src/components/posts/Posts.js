@@ -11,21 +11,32 @@ class Posts extends Component {
   constructor(props) {
     super(props)
 
-    this.state = {}
+    this.state = {
+      loading: true
+    }
   }
 
   componentDidMount() {
     // console.log()
     // console.log(this.props.feedId)
-    console.log(this.props)
     this.props.getPosts(this.props.feedId)
+    // console.log(this.props)
+  }
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps.posts.posts)
+    if (nextProps.posts.posts.length > 0 || nextProps.posts.posts !== null) {
+      console.log('posts loaded')
+      this.setState({ loading: false })
+    }
   }
 
   render() {
-    const { posts, loading } = this.props
+    const { posts } = this.props
+    let { loading } = this.state
+
     let postContent
 
-    if (!posts || loading) {
+    if (loading) {
       postContent = <h2>Loading....</h2>
     } else {
       // console.log(this.props.posts)

@@ -4,13 +4,14 @@ import { MDBContainer, MDBRow } from 'mdbreact'
 import { addFriend } from '../../actions/userAuthActions'
 import {
   MDBBtn as Button,
-  MDBCard,
-  MDBCardBody,
-  MDBCardImage,
-  MDBCardTitle,
-  MDBCardText,
-  MDBCol,
-  MDBNavLink as NavLink
+  MDBCard as Card,
+  MDBCardBody as CardBody,
+  MDBCardImage as CardImage,
+  MDBCardTitle as CardTitle,
+  MDBCardText as CardText,
+  MDBCol as Col,
+  MDBNavLink as NavLink,
+  MDBIcon as Icon
 } from 'mdbreact'
 
 export class UsersCard extends Component {
@@ -32,19 +33,34 @@ export class UsersCard extends Component {
     // console.log(user);
 
     return (
-      <MDBCol className='col-md-4 col-sm-12'>
-        <MDBCard>
-          <MDBCardImage
-            style={{ width: '80px' }}
+      // <MDBCol className='col-md-4 col-sm-12'>
+      //   <MDBCard>
+      //     <MDBCardImage
+      //       style={{ width: '80px' }}
+      //       className='img-fluid'
+      //       src={user.profile_pic}
+      //     />
+      //     <MDBCardBody>
+      //       <MDBCardTitle>{user.name}</MDBCardTitle>
+      //       <NavLink to={`/profile/${user._id}`}>View</NavLink>
+      //     </MDBCardBody>
+      //   </MDBCard>
+      // </MDBCol>
+      <Col size='6' lg='3' style={{ marginBottom: '10px' }}>
+        <Card>
+          <CardImage
             className='img-fluid'
             src={user.profile_pic}
+            waves
+            style={{ marginLeft: '10px' }}
           />
-          <MDBCardBody>
-            <MDBCardTitle>{user.name}</MDBCardTitle>
+          <CardBody style={{ textAlign: 'center' }}>
+            <CardTitle>{user.name}</CardTitle>
+            <hr />
             <NavLink to={`/profile/${user._id}`}>View</NavLink>
-          </MDBCardBody>
-        </MDBCard>
-      </MDBCol>
+          </CardBody>
+        </Card>
+      </Col>
     )
   }
 }

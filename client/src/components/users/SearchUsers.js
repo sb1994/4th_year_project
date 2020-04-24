@@ -31,8 +31,6 @@ class SearchUsers extends Component {
       totalUsers: nextProps.search.users.length
     })
   }
-
-  nextPage(pageNumber) {}
   handleChange(e) {
     this.setState({ [e.target.name]: e.target.value })
   }
@@ -53,14 +51,17 @@ class SearchUsers extends Component {
     ))
 
     return (
-      <MDBContainer>
-        <h2>Search</h2>
-        <input
-          type='text'
-          name='term'
-          value={this.state.term}
-          onChange={this.handleChange}
-        />
+      <MDBContainer style={{ paddingTop: 10 }}>
+        <MDBRow style={{ marginBottom: 10 }}>
+          <input
+            type='text'
+            name='term'
+            className='form-control'
+            value={this.state.term}
+            onChange={this.handleChange}
+            placeholder='Search for users'
+          />
+        </MDBRow>
         <MDBRow>{renderUsers}</MDBRow>
       </MDBContainer>
     )

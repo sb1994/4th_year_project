@@ -6,6 +6,7 @@ import * as _ from 'lodash'
 import { ConnectedList } from '../dashboard/ConnectedList'
 import { ChatFeed } from './ChatFeed'
 import { ChatForm } from './ChatForm'
+import './chat.css'
 
 // import ConnectedList from '../dashboard/ConnectedList'
 // const socket = io('http://localhost:5000')
@@ -32,11 +33,11 @@ export class Chat extends Component {
     // }
 
     if (!this.props.auth.isAuthenticated) {
-      this.props.history.push('/login')
+      this.props.history.push('/')
     } else {
       // console.log(this.props.auth)
 
-      this.socket = io('http://localhost:5000', {
+      this.socket = io('http://192.168.0.214:5000', {
         query: { currentUser: this.props.auth.user.id }
       })
       this.socket.on('connection', connected => {
@@ -78,7 +79,7 @@ export class Chat extends Component {
   }
   componentWillReceiveProps(nextProps) {
     if (!nextProps.auth.isAuthenticated) {
-      this.props.history.push('/login')
+      this.props.history.push('/')
     }
 
     if (nextProps.errors) {
@@ -90,7 +91,6 @@ export class Chat extends Component {
   }
   handleMsgInput = e => {
     this.setState({ [e.target.name]: e.target.value })
-    // console.log(this.state)
   }
   handleMsgSubmit = () => {
     this.socket.emit('add message', {
@@ -101,14 +101,12 @@ export class Chat extends Component {
   }
 
   render() {
-    // console.log(this.props.auth.user);
     let { users, socket, chatMessages } = this.state
 
     let { chat } = this.props
-    // console.log(chat.chat.length)
 
     return (
-      <div className='container'>
+      <div className='container' style={{ paddingTop: 10 }}>
         <ConnectedList connectedUsers={users} />
         {chatMessages === null ? (
           <ChatFeed chat={chat.chat} />
@@ -125,7 +123,11 @@ export class Chat extends Component {
               name='text'
               className='form-control'
             />
-            <button className='btn btn-primary' onClick={this.handleMsgSubmit}>
+            <button
+              className='btn chatBtn'
+              onClick={this.handleMsgSubmit}
+              style={{ backgroundColor: '#3A6bC3', color: '#fff' }}
+            >
               Add Message
             </button>
           </div>

@@ -6,6 +6,9 @@ import ProfileCard from './ProfileCard'
 import { withRouter } from 'react-router-dom'
 import { getCurrentUser } from '../../actions/userAuthActions'
 import { getPosts } from '../../actions/postActions'
+import { MDBContainer as Container, MDBRow as Row, MDBCol } from 'mdbreact'
+import './style.css'
+
 class Dashboard extends Component {
   constructor(props) {
     super(props)
@@ -51,20 +54,20 @@ class Dashboard extends Component {
       console.log(this.state.feedId)
 
       return (
-        <div className='container'>
-          <div className='row'>
+        <Container>
+          <Row className='row' style={{ marginTop: 10 }}>
             <ProfileCard user={user} history={history} />
-            <Posts feedId={user._id} />
-          </div>
-        </div>
+            <Posts feedId={user._id} className='posts-container' />
+          </Row>
+        </Container>
       )
     } else {
       return (
-        <div className='container'>
-          <div className='row'>
+        <Container>
+          <Row className='row'>
             <p>Loading ....</p>
-          </div>
-        </div>
+          </Row>
+        </Container>
       )
     }
   }

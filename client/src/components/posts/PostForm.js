@@ -116,7 +116,7 @@ export class PostForm extends Component {
       return (
         <div className='post-form mb-3'>
           <div className='card card-info'>
-            <div className='card-header bg-info text-white'>
+            <div className='card-header bg-color text-white'>
               Say Something....
             </div>
             <div className='card-body'>
@@ -124,6 +124,7 @@ export class PostForm extends Component {
               <div className='form-group'>
                 <input
                   type='text'
+                  className='form-control'
                   value={this.state.text}
                   placeholder='Speack your mind'
                   onChange={this.onChange}
@@ -136,17 +137,25 @@ export class PostForm extends Component {
                   className='img-responsive card-img'
                   alt=''
                 />
-                <input
-                  type='file'
-                  value={this.state.profile_pic}
-                  name='avatar'
-                  id='avatar'
-                  onChange={this.handleFileChange}
-                />
+                <div className='button-group'>
+                  <input
+                    type='file'
+                    // className='btn btn-green'
+                    value={this.state.profile_pic}
+                    name='avatar'
+                    id='avatar'
+                    onChange={this.handleFileChange}
+                  />
+                  <button
+                    className='btn'
+                    onClick={this.onSubmit}
+                    style={{ backgroundColor: '#3A6bC3', color: '#fff' }}
+                  >
+                    Submit
+                  </button>
+                </div>
               </div>
-              <button className='btn btn-dark' onClick={this.onSubmit}>
-                Submit
-              </button>
+
               {/* </form> */}
             </div>
           </div>

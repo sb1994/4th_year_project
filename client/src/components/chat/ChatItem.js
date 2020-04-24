@@ -13,22 +13,36 @@ export class ChatItem extends Component {
     let { msg, auth } = this.props
 
     return (
-      <div className='col-md-12 '>
-        <div className='row'>
+      <div className='col-md-12 chatItem' style={{ marginBottom: '10px' }}>
+        <div className='row text-white'>
           {auth.user.id === msg.user._id ? (
-            <div className='col-md-6'></div>
+            <div className='col-md-6' style={{ paddingBottom: '10px' }}></div>
           ) : null}
-          <div className='col-md-6 '>
+          <div
+            className={`col-md-6 col-12 ${
+              auth.user.id === msg.user._id ? ' msgAuthBg' : 'msgChatBg'
+            }`}
+          >
             <div className='row'>
-              <div className='col-md-6'>
-                <img
-                  className={`img-fluid`}
-                  style={{ height: '50px' }}
-                  src={msg.user.profile_pic}
-                />
-              </div>
-              <div className='col-md-6'>
-                <Moment date={msg.created} format='YYYY/MM/DD' />
+              <div className='col-md-12'>
+                <div className='row'>
+                  <div className='col-md-6 col-7'>
+                    <img
+                      className={`img-fluid float-left`}
+                      style={{ height: '50px' }}
+                      src={msg.user.profile_pic}
+                    />
+                    <p>{msg.user.name}</p>
+                  </div>
+                  <hr />
+                  <div className={`col-md-6 col-5`}>
+                    <Moment
+                      date={msg.created}
+                      format='DD/MM/YYYY'
+                      className='text-white'
+                    />
+                  </div>
+                </div>
               </div>
               <div className='col-md-12'>
                 <p

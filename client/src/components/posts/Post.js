@@ -44,11 +44,11 @@ export class Post extends Component {
     console.log(likeButtonStatus)
 
     return (
-      <div className='post-form mb-3'>
-        <div className='card card-info'>
-          <div className='card-header bg-info text-white'>
+      <div className='post-form mb-3 '>
+        <div className='card card-info '>
+          <div className='card-header bg-color text-white'>
             <div className='row'>
-              <div className='col-md-6'>
+              <div className='col-md-6 col-6'>
                 <img
                   src={post.user.profile_pic}
                   alt='Card image cap'
@@ -56,7 +56,7 @@ export class Post extends Component {
                 />
                 <span>{post.user.name}</span>
               </div>
-              <div className='col-md-6'>
+              <div className='col-md-6 col-6'>
                 <Moment className='text-right' format='YYYY/MM/DD'>
                   {post.created}
                 </Moment>
@@ -72,14 +72,13 @@ export class Post extends Component {
             <div className='row'>
               <div className='col-md-12'>{post.text}</div>
               <div className='col-md-12'>
-                {post.postImgURL !== undefined ? (
+                {post.postImgURL === undefined ||
+                post.postImgURL === '' ? null : (
                   <img
-                    className='img-fluid'
+                    className='img-fluid post-img'
                     src={post.postImgURL}
                     alt='Post Image'
                   />
-                ) : (
-                  ''
                 )}
               </div>
               <hr />
@@ -87,7 +86,8 @@ export class Post extends Component {
                 <div className='row'>
                   <div className='col-md-6'>
                     <button
-                      className='btn btn-primary'
+                      className='btn'
+                      style={{ backgroundColor: '#3A6bC3', color: '#fff' }}
                       onClick={this.showComments}
                     >
                       {showComments ? 'Hide Comments' : 'Show Comments'}

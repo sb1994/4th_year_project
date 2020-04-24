@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { getChatMessages } from '../../actions/chatActions'
 import ChatItem from './ChatItem'
-
+import './chat.css'
 export class ChatFeed extends Component {
   constructor(props) {
     super(props)
@@ -20,7 +20,7 @@ export class ChatFeed extends Component {
     let renderChat = chat.map(msg => {
       return <ChatItem key={msg._id} msg={msg} />
     })
-    return <div className='row'>{renderChat}</div>
+    return <div className='row chatContainer'>{renderChat}</div>
   }
 }
 

@@ -6,6 +6,7 @@ import Newsfeed from './Newsfeed'
 // import Spinner from "../common/Spinner";
 import { getPosts } from '../../actions/postActions'
 import { withRouter } from 'react-router-dom'
+import './style.css'
 
 class Posts extends Component {
   constructor(props) {
@@ -46,7 +47,7 @@ class Posts extends Component {
     // console.log(this.props);
 
     return (
-      <div className='feed col-md-8'>
+      <div className='feed col-md-8 post-container'>
         <div className='row'>
           <div className='col-md-12'>
             <PostForm feedId={this.props.feedId} />

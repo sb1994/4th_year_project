@@ -12,14 +12,19 @@ import {
   MDBNavbar,
   MDBNavbarBrand,
   MDBNavbarNav,
-  MDBNavItem,
-  MDBNavLink,
+  MDBNavItem as NavItem,
+  MDBNavLink as NavLink,
   MDBNavbarToggler,
   MDBCollapse,
-  MDBContainer
+  MDBDropdown,
+  MDBDropdownToggle,
+  MDBDropdownMenu,
+  MDBDropdownItem,
+  MDBIcon
 } from 'mdbreact'
 import { withRouter } from 'react-router-dom'
 import { setLoggedUser, logoutUser } from '../actions/userAuthActions'
+import './nav_style.css'
 const styles = {
   img: {
     height: 20,
@@ -28,7 +33,7 @@ const styles = {
 }
 class Navigation extends Component {
   state = {
-    collapseID: ''
+    isOpen: false
   }
   onLogoutClick(e) {
     e.preventDefault()
@@ -38,86 +43,68 @@ class Navigation extends Component {
     // console.log(this.props);
   }
 
-  toggleCollapse = collapseID => () => {
-    this.setState(prevState => ({
-      collapseID: prevState.collapseID !== collapseID ? collapseID : ''
-    }))
+  toggleCollapse = () => {
+    this.setState({ isOpen: !this.state.isOpen })
   }
   render() {
     const { isAuthenticated, user } = this.props.auth
-    // const authLinks = (
-    //   <Fragment>
-    //     <NavItem>
-    //       <NavLink className='white-text' to='/dashboard'>
-    //         <img
-    //           src={user.profile_pic}
-    //           className='img-fluid'
-    //           style={styles.img}
-    //         />
-    //       </NavLink>
-    //     </NavItem>
-    //     <NavItem>
-    //       <NavLink to='/search' className='white-text'>
-    //         Search
-    //       </NavLink>
-    //     </NavItem>
-    //     <NavItem>
-    //       <NavLink to='/chat' className='white-text'>
-    //         Chat
-    //       </NavLink>
-    //     </NavItem>
-    //     <NavItem>
-    //       <NavLink to='/friends' className='white-text'>
-    //         friends
-    //       </NavLink>
-    //     </NavItem>
-    //     <NavItem>
-    //       <NavLink
-    //         to=''
-    //         onClick={this.onLogoutClick.bind(this)}
-    //         className='white-text'
-    //       >
-    //         Logout
-    //       </NavLink>
-    //     </NavItem>
-    //   </Fragment>
-    // )
-    // const unAuthLinks = (
-    //   <Fragment>
-    //     <NavItem>
-    //       <NavLink className='white-text' to='/login'>
-    //         Login
-    //       </NavLink>
-    //     </NavItem>
-    //     <NavItem>
-    //       <NavLink className='white-text' to='/register'>
-    //         Register
-    //       </NavLink>
-    //     </NavItem>
-    //   </Fragment>
-    // )
+    const authLinks = (
+      <Fragment>
+        <NavItem>
+          <NavLink className='white-text' to='/dashboard'>
+            <img
+              src={user.profile_pic}
+              className='img-fluid'
+              style={styles.img}
+            />
+            <span>{user.name}</span>
+          </NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink to='/search' className='white-text'>
+            Search
+          </NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink to='/chat' className='white-text'>
+            Chat
+          </NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink
+            to=''
+            onClick={this.onLogoutClick.bind(this)}
+            className='white-text'
+          >
+            Logout
+          </NavLink>
+        </NavItem>
+      </Fragment>
+    )
+    const unAuthLinks = (
+      <Fragment>
+        <NavItem>
+          <NavLink className='white-text' to='/'>
+            Login
+          </NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink className='white-text' to='/register'>
+            Register
+          </NavLink>
+        </NavItem>
+      </Fragment>
+    )
     // return <MNavbar>{isAuthenticated ? authLinks : unAuthLinks}</MNavbar>
     return (
-      <MDBNavbar bg='light' expand='lg' color='light-blue lighten-4'>
-        {/* <Navbar.Brand href='#home'>React-Bootstrap</Navbar.Brand> */}
-
-        {/* <Na>Navbar</MDBNavbarBrand> */}
-        <MDBNavbarToggler
-          aria
-          onClick={this.toggleCollapse('navbarCollapse1')}
-          icon='bars'
-        />
-        <MDBCollapse id='navbarCollapse1' isOpen={this.state.collapseID} navbar>
-          <MDBNavbarNav left>
-            <MDBNavItem active>
-              <MDBNavLink to='#!'>Home</MDBNavLink>
-            </MDBNavItem>
-            <MDBNavItem>
-              <MDBNavLink to='#!'>Link</MDBNavLink>
-            </MDBNavItem>
-            <MDBNavItem>
-              <MDBNavLink to='#!'>Profile</MDBNavLink>
-            </MDBNavItem>
+      <MDBNavbar className='navbar' dark expand='md'>
+        <MDBNavbarBrand>
+          <strong className='white-text'>Social App</strong>
+        </MDBNavbarBrand>
+        <MDBNavbarToggler onClick={this.toggleCollapse} />
+        <MDBCollapse isOpen={this.state.isOpen} navbar>
+          <MDBNavbarNav right>
+            {isAuthenticated ? authLinks : unAuthLinks}
           </MDBNavbarNav>
         </MDBCollapse>
       </MDBNavbar>

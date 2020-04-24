@@ -26,7 +26,7 @@ export class Profile extends Component {
       return (
         <div className='container'>
           {/* <p>Profile</p> */}
-          <div className='row'>
+          <div className='row' style={{ marginTop: 10 }}>
             <Fragment>
               <ProfileCard user={searchedUser} />
               <Posts feedId={id} />

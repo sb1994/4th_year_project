@@ -1,11 +1,29 @@
 .msgAuth {
-  background-color: aqua;
   margin: 10;
   padding: 10px;
-  border-radius: 40px;
+  border-radius: 20px;
+  padding-bottom: 10px;
 }
-.msgChat {
-  background-color: red;
+.msgAuthBg {
+  background-color: #2abbac;
+}
+.msgChatBg {
+  background-color: #85a6e2;
+}
+.chatContainer {
   padding: 10px;
-  border-radius: 40px;
+}
+
+.msgChat {
+  /* padding: 10px; */
+  margin: 20px;
+}
+@media only screen and (max-width: 768px) {
+  .chatItem {
+    margin-top: 10px;
+  }
+  .chatBtn {
+    display: block;
+    width: 100%;
+  }
 }

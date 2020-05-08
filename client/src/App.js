@@ -25,17 +25,6 @@ if (localStorage.token) {
 
   // Set user and isAuthenticated
   store.dispatch(setLoggedUser(decoded))
-
-  // Check for expired token
-  // const currentTime = Date.now() / 1000;
-  // if (decoded.exp < currentTime) {
-  //   // Logout user
-  //   store.dispatch(logoutUser());
-  //   // Clear current Profile
-  //   store.dispatch(clearCurrentUser());
-  //   // Redirect to login
-  //   // window.location.href = '/login';
-  // }
 }
 
 class App extends Component {

@@ -94,9 +94,9 @@ router.post('/login', (req, res) => {
     .populate('pendingFriendsRequests.user')
     .populate('friends.user')
     .then(user => {
-      // if (!user) {
-      //   return res.status(404).json({ email: "User Not Found" });
-      // }
+      if (!user) {
+        return res.status(404).json({ email: 'User Not Found' })
+      }
       // console.log(user);
       // //check the password
       bcrypt.compare(password, user.password, (err, isMatch) => {

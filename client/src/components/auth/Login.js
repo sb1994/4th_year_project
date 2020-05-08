@@ -6,8 +6,6 @@ export class Login extends Component {
   componentDidMount() {
     if (this.props.auth.isAuthenticated) {
       this.props.history.push('/dashboard')
-    } else {
-      // window.location.reload()
     }
   }
 
@@ -20,13 +18,13 @@ export class Login extends Component {
       this.setState({ errors: nextProps.errors })
     }
   }
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     e.preventDefault()
     let email = e.target['email'].value
     let password = e.target['password'].value
     let userData = {
       email,
-      password
+      password,
     }
     // console.log(e.target['username'].value);
     // console.log(username,password);
@@ -71,11 +69,11 @@ export class Login extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     loading: state.loading,
     error: state.error,
-    auth: state.auth
+    auth: state.auth,
   }
 }
 
